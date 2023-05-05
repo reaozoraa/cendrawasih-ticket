@@ -18,10 +18,14 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: rgb(208, 203, 103);
+}
+
+button{
+  padding: 0.5rem 2rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+button:hover{
+  background-color: aqua;
 }
