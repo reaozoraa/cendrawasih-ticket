@@ -44,3 +44,12 @@ export default function Home() {
     
   )
 }
+export async function getStaticProps(context) {
+  let flightApi = await fetch (`https://travelimpactmodel.googleapis.com/$discovery/rest?version=v1`)
+  flightApi = await flightApi.json()
+
+  console.log(flightApi)
+  return {
+    props: {flightApi: flightApi}, // will be passed to the page component as props
+  }
+}
