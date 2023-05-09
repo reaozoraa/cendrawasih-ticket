@@ -24,32 +24,55 @@ export default function Home() {
   //   console.log(getDataUsers());
   // })
 
-  const googleAuth = new GoogleAuthProvider();
-  const [user,setuser]=useAuthState(auth);
-  const login = async()=>{
-    const result = await signInWithPopup(auth,googleAuth);
-  }
 
-  useEffect(()=>{
-    console.log(user);
-  },[user])
 
-  return (
-    <div className='google'>
-    <h1>Cendrawasih Login With google</h1>
-    <h3>{user? "Selamat datang "+ user.displayName : ""}</h3>
-    <button onClick={login}>Login</button>
-    <button onClick={()=>auth.signOut()}>SighOut</button>
-    </div>
+
+
+
+
+
+
+
+  // const googleAuth = new GoogleAuthProvider();
+  // const [user,setuser]=useAuthState(auth);
+  // const login = async()=>{
+  //   const result = await signInWithPopup(auth,googleAuth);
+  // }
+
+  // useEffect(()=>{
+  //   console.log(user);
+  // },[user])
+
+  // return (
+  //   <div className='google'>
+  //   <h1>Cendrawasih Login With google</h1>
+  //   <h3>{user? "Selamat datang "+ user.displayName : ""}</h3>
+  //   <button onClick={login}>Login</button>
+  //   <button onClick={()=>auth.signOut()}>SighOut</button>
+  //   </div>
     
-  )
+  // )
 }
-export async function getStaticProps(context) {
-  let flightApi = await fetch (`https://travelimpactmodel.googleapis.com/$discovery/rest?version=v1`)
-  flightApi = await flightApi.json()
 
-  console.log(flightApi)
-  return {
-    props: {flightApi: flightApi}, // will be passed to the page component as props
-  }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// export async function getStaticProps(context) {
+//   let flightApi = await fetch (`https://travelimpactmodel.googleapis.com/$discovery/rest?version=v1`)
+//   flightApi = await flightApi.json()
+
+//   console.log(flightApi)
+//   return {
+//     props: {flightApi: flightApi}, // will be passed to the page component as props
+//   }
+// }

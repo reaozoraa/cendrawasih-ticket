@@ -9,39 +9,39 @@ import {useAuthState} from "react-firebase-hooks/auth"
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home({ flightApi }) {
-  // const [data,setData] = useState();
+  const [data,setData] = useState();
 
-  // const url = 'https://airline-travel.p.rapidapi.com/';
-
-  // useEffect(() => {
-  //   const options = {
-  //     method: 'GET',
-  //     headers: {
-  //       'X-RapidAPI-Key': '03b0f3b656msh10d84a25fc7ae22p198dc9jsn1075b3d44129',
-  //       'X-RapidAPI-Host': 'airline-travel.p.rapidapi.com'
-  //     }
-  //   };
-    
-
-  //   fetch(url, options)
-  //   .then(response => response.json())
-  //   .then(response => {
-  //     console.log(response);
-  //   })
-  //   .catch(err =>{
-  //     console.error(err);
-  //   })
-  // }, [])
+  const url = 'https://tripadvisor16.p.rapidapi.com/api/v1/flights/searchFlights?sourceAirportCode=BOM&destinationAirportCode=DEL&date=%3CREQUIRED%3E&itineraryType=%3CREQUIRED%3E&sortOrder=%3CREQUIRED%3E&numAdults=1&numSeniors=0&classOfService=%3CREQUIRED%3E&pageNumber=1&currencyCode=USD';
 
   useEffect(() => {
-    fetch("https://travelimpactmodel.googleapis.com/v1/flights:computeFlightEmissions?key=AIzaSyBzRoI6f4C0FvIh7fjOohxo7jioZLMnm-U" , {method: "POST"})
-    .then(res => res.json())
-    .then(data => console.log(data))
-  } , [])
+    const options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': '03b0f3b656msh10d84a25fc7ae22p198dc9jsn1075b3d44129',
+        'X-RapidAPI-Host': 'tripadvisor16.p.rapidapi.com'
+      }
+    };
+    
 
-  // console.log(flightApi)
+    fetch(url, options)
+    .then(response => response.json())
+    .then(response => {
+      console.log(response);
+    })
+    .catch(err =>{
+      console.error(err);
+    })
+  }, [])
 
-  return <div>ok</div>
+  // useEffect(() => {
+  //   fetch("https://travelimpactmodel.googleapis.com/v1/flights:computeFlightEmissions?key=AIzaSyBzRoI6f4C0FvIh7fjOohxo7jioZLMnm-U" , {method: "POST"})
+  //   .then(res => res.json())
+  //   .then(data => console.log(data))
+  // } , [])
+
+  // // console.log(flightApi)
+
+  // return <div>ok</div>
 }
 // export async function getServerSideProps(context) {
 //   let flightApi = await fetch (`https://travelimpactmodel.googleapis.com/v1/flights:computeFlightEmissions?key=$AIzaSyBzRoI6f4C0FvIh7fjOohxo7jioZLMnm-U`)
