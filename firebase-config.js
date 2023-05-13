@@ -1,4 +1,6 @@
 import { initializeApp } from "firebase/app";
+import { getAuth, createUserWithEmailAndPassword , signOut, signInWithEmailAndPassword} from 'firebase/auth'
+
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -11,3 +13,31 @@ const firebaseConfig = {
 };
 
 export const app = initializeApp(firebaseConfig);
+
+export const firebaseAuth = getAuth()
+
+export const Authentication = () => {
+  return FirebaseAuth
+}
+
+export const signUpEmail = async (email , password) => {
+  return await createUserWithEmailAndPassword (firebaseAuth, email,password)
+}
+
+export const signInEmail = async (email,password) => {
+ return await signInWithEmailAndPassword(firebaseAuth, email,password)
+}
+
+export const signOutEmail = async () => {
+  await signInWithEmailAndPassword(firebaseAuth)
+}
+
+export const getSignInErrorMessage = (code) => {
+  switch (code) {
+    case 'auth/user-not-found':
+      return 'Email tidak terdaftar'
+    case 'auth/wrong-password':
+    default:
+      return 'Email atau password salah'
+  }
+}
