@@ -1,25 +1,42 @@
-import * as React from 'react';
+import * as React from "react";
 import {
-AppBar, Box, Toolbar, CssBaseline, createTheme, IconButton, Typography, Menu, 
-Container, Avatar, Button, Tooltip, MenuItem, Card, CardActions,
-CardContent, Tabs, Tab, ThemeProvider  } 
-from '@mui/material/'
+  AppBar,
+  Box,
+  Toolbar,
+  CssBaseline,
+  createTheme,
+  IconButton,
+  Typography,
+  Menu,
+  Container,
+  Avatar,
+  Button,
+  Tooltip,
+  MenuItem,
+  Card,
+  CardActions,
+  CardContent,
+  Tabs,
+  Tab,
+  ThemeProvider,
+} from "@mui/material/";
 
-import MenuIcon from '@mui/icons-material/Menu';
-import AdbIcon from '@mui/icons-material/Adb';
-import style  from '../styles/Home.module.css';
-import PropTypes from 'prop-types';
-import Image from 'next/image';
-import { Flight, Hotel, LocalHotelOutlined } from '@mui/icons-material';
-import Navbar from '../components/layouts/Navbar';
-import FlightSearch from '../components/inputs/FlightSearch';
-import HotelSearch from '../components/inputs/HotelSearch';
-import { Questrial } from 'next/font/google'
+import MenuIcon from "@mui/icons-material/Menu";
+import AdbIcon from "@mui/icons-material/Adb";
+import style from "../styles/Home.module.css";
+import PropTypes from "prop-types";
+import Image from "next/image";
+import { Flight, Hotel, LocalHotelOutlined } from "@mui/icons-material";
+import Navbar from "../components/layouts/Navbar";
+import FlightSearch from "../components/inputs/FlightSearch";
+import HotelSearch from "../components/inputs/HotelSearch";
+import { Questrial } from "next/font/google";
+import { useRouter } from "next/router";
 
 const questrial = Questrial({
-  subsets: ['latin'],
-  weight: ['400'],
-})
+  subsets: ["latin"],
+  weight: ["400"],
+});
 
 const theme = createTheme({
   typography: {
@@ -39,43 +56,37 @@ const theme = createTheme({
   },
 });
 
-
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-  
+
   return (
-      <div
+    <div
       role="tabpanel"
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
       {...other}
-      >
-      {value === index && (
-          <Box>
-          {children}
-          </Box>
-      )}
-      </div>
+    >
+      {value === index && <Box>{children}</Box>}
+    </div>
   );
-  }
-  
-  TabPanel.propTypes = {
+}
+
+TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
-  };
+};
 
 function Home() {
   const [formSection, setFormSection] = React.useState(0);
-
 
   const handleFormSection = (event, newValue) => {
     setFormSection(newValue);
@@ -83,48 +94,84 @@ function Home() {
 
   return (
     <>
-    <ThemeProvider theme={theme}>
-    <main className={style.main} style={{
-            backgroundImage: 'url(/background.jpeg)',
-            backgroundRepeat: 'no-repeat',
+      <ThemeProvider theme={theme}>
+        <main
+          className={style.main}
+          style={{
+            backgroundImage: "url(/background.jpeg)",
+            backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'bottom left',
-          }}>
-      <CssBaseline />
-      <Navbar />
-      <Container maxWidth="xl" sx={{ position: "relative", zIndex: "10", transform: "translateY(50%)"  }}>
-        <Card sx={{ minWidth: 275, mt: "10px" }}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs value={formSection} variant="fullWidth" onChange={handleFormSection} aria-label="">
-              <Tab label={ <div className='flex text-lg'><Flight /> Flight</div> } {...a11yProps(0)}  />
-              <Tab label={ <div className='flex text-lg'><Hotel />  Hotel</div> } {...a11yProps(1)}  />
-              {/* <Tab icon={<Flight />} label="Flight" {...a11yProps(0)}  />
+              t.palette.mode === "light"
+                ? t.palette.grey[50]
+                : t.palette.grey[900],
+            backgroundSize: "cover",
+            backgroundPosition: "bottom left",
+          }}
+        >
+          <CssBaseline />
+          <Navbar />
+          <Container
+            maxWidth="xl"
+            sx={{
+              position: "relative",
+              zIndex: "10",
+              transform: "translateY(50%)",
+            }}
+          >
+            <Card sx={{ minWidth: 275, mt: "10px" }}>
+              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                <Tabs
+                  value={formSection}
+                  variant="fullWidth"
+                  onChange={handleFormSection}
+                  aria-label=""
+                >
+                  <Tab
+                    label={
+                      <div className="flex text-lg">
+                        <Flight /> Flight
+                      </div>
+                    }
+                    {...a11yProps(0)}
+                  />
+                  <Tab
+                    label={
+                      <div className="flex text-lg">
+                        <Hotel />  Hotel
+                      </div>
+                    }
+                    {...a11yProps(1)}
+                  />
+                  {/* <Tab icon={<Flight />} label="Flight" {...a11yProps(0)}  />
               <Tab icon={<Hotel />} label="Hotel" {...a11yProps(1)}  /> */}
-            </Tabs>
-            
-          </Box>
-          <CardContent>
-            <TabPanel value={formSection} index={0}>
-              <FlightSearch />
-            </TabPanel>
-            <TabPanel value={formSection} index={1}>
-              <HotelSearch></HotelSearch>
-            </TabPanel>
-          </CardContent>  
-        </Card>
-      </Container>
-      <Container maxWidth="auto"  sx={{ position: "relative", backgroundColor: "white", height: "100vh", position: "absolute", color: "black"}}>
-
-      </Container>
-    </main>
-    </ThemeProvider>
+                </Tabs>
+              </Box>
+              <CardContent>
+                <TabPanel value={formSection} index={0}>
+                  <FlightSearch />
+                </TabPanel>
+                <TabPanel value={formSection} index={1}>
+                  <HotelSearch></HotelSearch>
+                </TabPanel>
+              </CardContent>
+            </Card>
+          </Container>
+          <Container
+            maxWidth="auto"
+            sx={{
+              position: "relative",
+              backgroundColor: "white",
+              height: "100vh",
+              position: "absolute",
+              color: "black",
+            }}
+          ></Container>
+        </main>
+      </ThemeProvider>
     </>
   );
 }
 export default Home;
-
 
 /**
  <FormControl sx={{ width: "100%", '& .MuiTextField-root': { m: 1, width: '25ch' } }} >

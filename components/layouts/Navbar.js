@@ -1,47 +1,69 @@
-import * as React from 'react';
+import * as React from "react";
 
 import {
-    AppBar, Box, Toolbar, CssBaseline, IconButton, Typography, Menu, 
-    Container, Avatar, Button, Tooltip, MenuItem, Card, CardActions,
-    CardContent, Tabs, Tab  } 
-from '@mui/material/'
+  AppBar,
+  Box,
+  Toolbar,
+  CssBaseline,
+  IconButton,
+  Typography,
+  Menu,
+  Container,
+  Avatar,
+  Button,
+  Tooltip,
+  MenuItem,
+  Card,
+  CardActions,
+  CardContent,
+  Tabs,
+  Tab,
+} from "@mui/material/";
+import { useRouter } from "next/router";
 
-import MenuIcon from '@mui/icons-material/Menu';
-import AdbIcon from '@mui/icons-material/Adb';
-import { BookmarkBorder } from '@mui/icons-material';
-import Image from 'next/image';
+import MenuIcon from "@mui/icons-material/Menu";
+import AdbIcon from "@mui/icons-material/Adb";
+import { BookmarkBorder } from "@mui/icons-material";
+import Image from "next/image";
 // import logo from '../public/brand/logo.png';
 
-const pages = ['Saved'];
-const settings = ['Profile', 'Logout'];
+const pages = ["Saved"];
+const settings = ["Profile", "Logout"];
+
 const bull = (
-  <Box component="span" sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}>•</Box>
+  <Box
+    component="span"
+    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
+  >
+    •
+  </Box>
 );
 
 export default function Navbar() {
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const router = useRouter();
 
-    const handleOpenNavMenu = (event) => {
+  const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
-    };
-    const handleOpenUserMenu = (event) => {
+  };
+  const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-    };
+  };
 
-    const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-    };
+  };
 
-    const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-    };
+  };
 
-    return (      
-    <AppBar position="static" sx={{ backgroundColor:"white", color: "black"}}>
-        <Container maxWidth="xl">
+  return (
+    <AppBar position="static" sx={{ backgroundColor: "white", color: "black" }}>
+      <Container maxWidth="xl">
         <Toolbar disableGutters>
-            {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
             <Typography
             variant="h6"
             noWrap
@@ -60,82 +82,93 @@ export default function Navbar() {
             LOGO
             </Typography> */}
 
-            <Box sx={{ flexGrow: 0, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
             <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenNavMenu}
-                color="inherit"
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
             >
-                <MenuIcon />
+              <MenuIcon />
             </IconButton>
             <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-                }}
-                keepMounted
-                transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{
-                display: { xs: 'block', md: 'none' },
-                }}
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: "block", md: "none" },
+              }}
             >
-                {pages.map((page) => (
+              {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
-                ))}
+              ))}
             </Menu>
-            </Box>
+          </Box>
 
-            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                <Image
-                src="/brand/title.png"
-                alt="the logo"
-                width={230}
-                height={230}
-                />
-            </Box>
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <Image
+              src="/brand/title.png"
+              alt="the logo"
+              width={230}
+              height={230}
+            />
+          </Box>
 
-            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-                <Image
-                src="/brand/logoonly.png"
-                alt="the logo"
-                width={50}
-                height={50}
-                />
-            </Box>
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+            <Image
+              src="/brand/logoonly.png"
+              alt="the logo"
+              width={50}
+              height={50}
+            />
+          </Box>
 
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }}} className="flex justify-end">
+          <Box
+            sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
+            className="flex justify-end"
+          >
             {pages.map((page) => (
-                <Button
+              <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'inherit', display: 'block'}}
-                >
-                <BookmarkBorder/>
+                sx={{ my: 2, color: "inherit", display: "block" }}
+              >
+                <BookmarkBorder />
                 {page}
-                </Button>
+              </Button>
             ))}
-            </Box>
+          </Box>
 
-            {/* UNAUTHENTICATED */}
-            <Box sx={{ flexGrow: 0 }}>
-                <Button className='mx-1' color="inherit" >Login</Button>
-                <Button variant="contained" className='bg-blue-500 mx-1' >Register</Button>
-            </Box>
+          {/* UNAUTHENTICATED */}
+          <Box sx={{ flexGrow: 0 }}>
+            <Button
+              className="mx-1"
+              color="inherit"
+              onClick={() => router.push("/sign-in")}
+            >
+              Login
+            </Button>
+            <Button variant="contained" className="bg-blue-500 mx-1">
+              Register
+            </Button>
+          </Box>
 
-            {/* AUTHENTICATED */}
-            {/* <Box sx={{ flexGrow: 0 }}>
+          {/* AUTHENTICATED */}
+          {/* <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -165,6 +198,7 @@ export default function Navbar() {
                 </Menu>
             </Box> */}
         </Toolbar>
-        </Container>
-    </AppBar>)
+      </Container>
+    </AppBar>
+  );
 }
