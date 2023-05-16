@@ -1,53 +1,31 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import PocketBase from 'pocketbase';
-import { use, useEffect , useState } from 'react';
-import { auth } from "./firebase";
-import {signInWithPopup, GoogleAuthProvider} from "firebase/auth";
-import {useAuthState} from "react-firebase-hooks/auth"
+import pb from "@/lib/pocketbase";
+import { useEffect, useState } from "react";
 
-const inter = Inter({ subsets: ['latin'] })
+export default function flight() {
+  const [flights, setFlights] = useState([]);
 
-export default function Home({ flightApi }) {
-  const [data,setData] = useState();
-
-  const url = 'https://tripadvisor16.p.rapidapi.com/api/v1/flights/searchFlights?sourceAirportCode=BOM&destinationAirportCode=DEL&date=%3CREQUIRED%3E&itineraryType=%3CREQUIRED%3E&sortOrder=%3CREQUIRED%3E&numAdults=1&numSeniors=0&classOfService=%3CREQUIRED%3E&pageNumber=1&currencyCode=USD';
+  async function getFlight() {
+    const resultList = await pb.collection("flight_tickets").getFullList({
+      expand: "origin,destination",
+    });
+    setFlights(resultList);
+  }
 
   useEffect(() => {
-    const options = {
-      method: 'GET',
-      headers: {
-        'X-RapidAPI-Key': '03b0f3b656msh10d84a25fc7ae22p198dc9jsn1075b3d44129',
-        'X-RapidAPI-Host': 'tripadvisor16.p.rapidapi.com'
-      }
-    };
-    
+    getFlight();
+  }, []);
 
-    fetch(url, options)
-    .then(response => response.json())
-    .then(response => {
-      console.log(response);
-    })
-    .catch(err =>{
-      console.error(err);
-    })
-  }, [])
-
-  // useEffect(() => {
-  //   fetch("https://travelimpactmodel.googleapis.com/v1/flights:computeFlightEmissions?key=AIzaSyBzRoI6f4C0FvIh7fjOohxo7jioZLMnm-U" , {method: "POST"})
-  //   .then(res => res.json())
-  //   .then(data => console.log(data))
-  // } , [])
-
-  // // console.log(flightApi)
-
-  // return <div>ok</div>
+  return (
+    <>
+      <div>
+        {flights.map((flight) => (
+          <div key={flight.id}>
+            {flight.expand.origin.airport_name} ke{" "}
+            {flight.expand.destination.airport_name}
+          </div>
+        ))}
+      </div>
+      <input></input>
+    </>
+  );
 }
-// export async function getServerSideProps(context) {
-//   let flightApi = await fetch (`https://travelimpactmodel.googleapis.com/v1/flights:computeFlightEmissions?key=$AIzaSyBzRoI6f4C0FvIh7fjOohxo7jioZLMnm-U`)
-//   flightApi = await flightApi.json()
-
-//   return {
-//     props: {flightApi}, // will be passed to the page component as props
-//   }
-// }

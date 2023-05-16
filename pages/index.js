@@ -5,10 +5,21 @@ import { use, useEffect } from 'react';
 import { auth } from "./firebase";
 import {signInWithPopup, GoogleAuthProvider} from "firebase/auth";
 import {useAuthState} from "react-firebase-hooks/auth"
+import useLogout from './hooks/useLogout';
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const logout = useLogout();
+
+
+
+  return <>
+  
+  <button onClick={logout}>LogOut</button>
+
+  </>
+
   // const pb = new PocketBase('http://127.0.0.1:8090');
 
   // async function  getDataUsers() {
