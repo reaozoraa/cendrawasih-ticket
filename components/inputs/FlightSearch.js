@@ -88,6 +88,14 @@ export default function FlightSearch() {
                         onChange={(newValue) => setDate(newValue)}
                     />
                     </LocalizationProvider>   
+                    <SyncAlt sx={{ fontSize: "30px"}} />
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                        label="Tanggal Pergi"
+                        value={dateValue}
+                        onChange={(newValue) => setDate(newValue)}
+                    />
+                    </LocalizationProvider>   
 
                     {/* <FormControlLabel control={<Checkbox />} label="Label" /> */}
                 </Box>

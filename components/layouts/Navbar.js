@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useRouter } from "next/router"
+
 
 import {
     AppBar, Box, Toolbar, CssBaseline, IconButton, Typography, Menu, 
@@ -8,19 +10,20 @@ from '@mui/material/'
 
 import MenuIcon from '@mui/icons-material/Menu';
 import AdbIcon from '@mui/icons-material/Adb';
-import { BookmarkBorder } from '@mui/icons-material';
+import { BookmarkBorder, Route } from '@mui/icons-material';
 import Image from 'next/image';
+import Link from 'next/link';
 // import logo from '../public/brand/logo.png';
 
 const pages = ['Saved'];
 const settings = [
 {
     label: "Profile",
-    link: "link"
+    link: ""
 },
 {
     label: "Logout",
-    link: "link"
+    link: "sign-in"
 }];
 const bull = (
   <Box component="span" sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}>•</Box>
@@ -44,7 +47,6 @@ export default function Navbar() {
     const handleCloseUserMenu = () => {
     setAnchorElUser(null);
     };
-
     return (      
     <AppBar position="static" sx={{ backgroundColor:"white", color: "black"}}>
         <Container maxWidth="xl">
@@ -171,8 +173,8 @@ export default function Navbar() {
                     </MenuItem>
                     ))} */}
                     {settings.map((option) => (
-                        <MenuItem key={option.label} value={option.link}>
-                        {option.label}
+                        <MenuItem key={option.label} >
+                            <Link href={option.link}>{option.label}</Link>
                         </MenuItem>
                     ))}
                 </Menu>
