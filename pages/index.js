@@ -11,10 +11,13 @@ import style  from '../styles/Home.module.css';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
 import { Flight, Hotel, LocalHotelOutlined } from '@mui/icons-material';
+import { Questrial } from 'next/font/google'
+
+
+import Footer from '../components/layouts/Footer';
 import Navbar from '../components/layouts/Navbar';
 import FlightSearch from '../components/inputs/FlightSearch';
 import HotelSearch from '../components/inputs/HotelSearch';
-import { Questrial } from 'next/font/google'
 
 const questrial = Questrial({
   subsets: ['latin'],
@@ -94,7 +97,7 @@ function Home() {
           }}>
       <CssBaseline />
       <Navbar />
-      <Container maxWidth="xl" sx={{ position: "relative", zIndex: "10", transform: "translateY(50%)"  }}>
+      <Container maxWidth="lg" sx={{ position: "relative", zIndex: "10", transform: "translateY(50%)"  }}>
         <Card sx={{ minWidth: 275, mt: "10px" }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={formSection} variant="fullWidth" onChange={handleFormSection} aria-label="">
@@ -115,9 +118,11 @@ function Home() {
           </CardContent>  
         </Card>
       </Container>
-      <Container maxWidth="auto"  sx={{ position: "relative", backgroundColor: "white", height: "100vh", position: "absolute", color: "black"}}>
-
+      <Container maxWidth="auto"  sx={{backgroundColor: "white", height: "100vh", position: "absolute", color: "black"}}>
+              
       </Container>
+      <Footer />
+      
     </main>
     </ThemeProvider>
     </>

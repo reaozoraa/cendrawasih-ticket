@@ -13,7 +13,15 @@ import Image from 'next/image';
 // import logo from '../public/brand/logo.png';
 
 const pages = ['Saved'];
-const settings = ['Profile', 'Logout'];
+const settings = [
+{
+    label: "Profile",
+    link: "link"
+},
+{
+    label: "Logout",
+    link: "link"
+}];
 const bull = (
   <Box component="span" sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}>•</Box>
 );
@@ -129,13 +137,13 @@ export default function Navbar() {
             </Box>
 
             {/* UNAUTHENTICATED */}
-            <Box sx={{ flexGrow: 0 }}>
+            {/* <Box sx={{ flexGrow: 0 }}>
                 <Button className='mx-1' color="inherit" >Login</Button>
                 <Button variant="contained" className='bg-blue-500 mx-1' >Register</Button>
-            </Box>
+            </Box> */}
 
             {/* AUTHENTICATED */}
-            {/* <Box sx={{ flexGrow: 0 }}>
+            <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -157,13 +165,18 @@ export default function Navbar() {
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
                 >
-                    {settings.map((setting) => (
+                    {/* {settings.map((setting) => (
                     <MenuItem key={setting} onClick={handleCloseUserMenu}>
                         <Typography textAlign="center">{setting}</Typography>
                     </MenuItem>
+                    ))} */}
+                    {settings.map((option) => (
+                        <MenuItem key={option.label} value={option.link}>
+                        {option.label}
+                        </MenuItem>
                     ))}
                 </Menu>
-            </Box> */}
+            </Box>
         </Toolbar>
         </Container>
     </AppBar>)

@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import {
 Button, Box, CssBaseline, MenuItem, Radio, RadioGroup, FormControl, FormControlLabel, 
-FormLabel, TextField, Grid, Checkbox } 
+FormLabel, TextField, Grid, Checkbox, InputLabel, OutlinedInput } 
 from '@mui/material/'
 
 import SyncAlt from '@mui/icons-material/SyncAlt';
@@ -92,8 +92,8 @@ export default function FlightSearch() {
                     {/* <FormControlLabel control={<Checkbox />} label="Label" /> */}
                 </Box>
             </Box>
-            <Box className="" sx={{ maxWidth: "530px", minWidth: "300px"  }}>
-                <TextField
+            <Box className="" sx={{ maxWidth: "300px", minWidth: "300px"  }}>
+                <TextField 
                 type="number"
                 id="outlined-basic"
                 label="Numbers"
@@ -102,6 +102,18 @@ export default function FlightSearch() {
                 onSelect={(e) => handleRegexNumber(e)}
                 value={num}
                 />
+                {/* <FormControl fullWidth sx={{ m: 1 }}>
+                    <InputLabel htmlFor="">Numbers</InputLabel>
+                    <OutlinedInput
+                    type="number"
+                    id=""
+                    label="Numbers"
+                    // variant="outlined"
+                    onChange={(e) => handleRegexNumber(e)}
+                    onSelect={(e) => handleRegexNumber(e)}
+                    value={num}
+                    />
+                </FormControl> */}
                 <TextField
                 id="seats"
                 select
@@ -109,7 +121,7 @@ export default function FlightSearch() {
                 defaultValue="economy"
                 helperText="Please select your seat"
                 type="number"
-                fullWidth
+                // fullWidth
                 >
                 {seats.map((option) => (
                     <MenuItem key={option.value} value={option.value}>

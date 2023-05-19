@@ -65,7 +65,7 @@ export default function FlightSearch() {
         <FormControl sx={{ width: "100%", '& .MuiTextField-root': { m: 1, width: '25ch' } }} >
             <Box className="flex flex-wrap justify-between">
                 <FormControl fullWidth sx={{ m: 1 }}>
-                    <InputLabel htmlFor="outlined-adornment-amount">Place</InputLabel>
+                    <InputLabel htmlFor="">Place</InputLabel>
                     <OutlinedInput
                         id="outlined-adornment-amount"
                         // startAdornment={<InputAdornment position="start">$</InputAdornment>}
@@ -97,6 +97,17 @@ export default function FlightSearch() {
                 </TextField>
                 {/* <FormControlLabel control={<Checkbox />} label="Label" /> */}
             </Box>
+            <Box className="flex flex-wrap justify-between">
+                <FormControl fullWidth sx={{ m: 1 }}>
+                    <InputLabel htmlFor="">Place</InputLabel>
+                    <OutlinedInput
+                        id="outlined-adornment-amount"
+                        // startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                        label="Place"
+                    />
+                </FormControl>
+            </Box>
+            
             <Box className='flex justify-end'>
                 <Button variant="contained" className='bg-blue-500'>Search</Button>
             </Box>
