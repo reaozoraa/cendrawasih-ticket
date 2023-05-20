@@ -1,24 +1,27 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import PocketBase from 'pocketbase';
-import { use, useEffect } from 'react';
+import Image from "next/image";
+import { Inter } from "next/font/google";
+import PocketBase from "pocketbase";
+import { use, useEffect } from "react";
 import { auth } from "./firebase";
-import {signInWithPopup, GoogleAuthProvider} from "firebase/auth";
-import {useAuthState} from "react-firebase-hooks/auth"
-import useLogout from './hooks/useLogout';
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import useLogout from "./hooks/useLogout";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
+
+function Khusus() {
+  return <>cuman bisa diliat sama orang udh login</>;
+}
 
 export default function Home() {
   const logout = useLogout();
 
-
-
-  return <>
-  
-  <button onClick={logout}>LogOut</button>
-
-  </>
+  return (
+    <>
+      <button onClick={logout}>LogOut</button>
+      <Khusus></Khusus>
+    </>
+  );
 
   // const pb = new PocketBase('http://127.0.0.1:8090');
 
@@ -34,15 +37,6 @@ export default function Home() {
   // useEffect(() => {
   //   console.log(getDataUsers());
   // })
-
-
-
-
-
-
-
-
-
 
   // const googleAuth = new GoogleAuthProvider();
   // const [user,setuser]=useAuthState(auth);
@@ -61,22 +55,9 @@ export default function Home() {
   //   <button onClick={login}>Login</button>
   //   <button onClick={()=>auth.signOut()}>SighOut</button>
   //   </div>
-    
+
   // )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // export async function getStaticProps(context) {
 //   let flightApi = await fetch (`https://travelimpactmodel.googleapis.com/$discovery/rest?version=v1`)

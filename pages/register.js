@@ -9,6 +9,7 @@ export default function register() {
     event.preventDefault();
     try {
       const data = {
+        username: event.target.username.value,
         email: event.target.email.value,
         password: event.target.password.value,
         emailVisibility: true,
@@ -27,6 +28,15 @@ export default function register() {
       <form onSubmit={signUp}>
         <div className="mb-6  mx-auto"></div>
         <div className="card-body">
+          <div>
+            <label>username</label>
+            <input
+              id="username"
+              type="text"
+              name="username"
+              placeholder="Username"
+            />
+          </div>
           <div>
             <label>Email</label>
             <input id="email" type="email" name="email" placeholder="email" />
