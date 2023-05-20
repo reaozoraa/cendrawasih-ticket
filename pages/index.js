@@ -16,8 +16,8 @@ import { Questrial } from 'next/font/google'
 
 import Footer from '../components/layouts/Footer';
 import Navbar from '../components/layouts/Navbar';
-import FlightSearch from '../components/inputs/FlightSearch';
-import HotelSearch from '../components/inputs/HotelSearch';
+import FlightSearch from '../components/inputs/search/FlightSearch';
+import HotelSearch from '../components/inputs/search/HotelSearch';
 
 const questrial = Questrial({
   subsets: ['latin'],
@@ -119,7 +119,8 @@ function Home() {
         </Card>
       </Container>
       <Container maxWidth="auto"  sx={{backgroundColor: "white", height: "100vh", position: "absolute", color: "black"}}>
-              
+        {/* AIR */}
+        <Container maxWidth="auto"  sx={{backgroundColor: "blue", height: "50%", height: "300px"}} />
       </Container>
       <Footer />
       

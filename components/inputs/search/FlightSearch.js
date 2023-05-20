@@ -7,6 +7,7 @@ FormLabel, TextField, Grid, Checkbox, InputLabel, OutlinedInput }
 from '@mui/material/'
 
 import SyncAlt from '@mui/icons-material/SyncAlt';
+import East from '@mui/icons-material/East';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
 import { Flight } from '@mui/icons-material';
@@ -88,7 +89,7 @@ export default function FlightSearch() {
                         onChange={(newValue) => setDate(newValue)}
                     />
                     </LocalizationProvider>   
-                    <SyncAlt sx={{ fontSize: "30px"}} />
+                    <East></East>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
                         label="Tanggal Pergi"

@@ -29,14 +29,45 @@ export default function Footer() {
         <Box
           sx={{
             flexGrow: 1,
-            justifyContent: "center",
             display: "flex",
             mb: 2,
           }}
-          className='border flex flex-wrap'
+          className='border flex flex-wrap justify-evenly'
         >
           <Box>
-            
+            <h3>aaaaaaaaaaaaaaaaaaaaaaaaaaa</h3>
+            <h3>aaaaaaaaaaaaaaaaaaaaaaaaaaa</h3>
+            <h3>aaaaaaaaaaaaaaaaaaaaaaaaaaa</h3>
+            <h3>aaaaaaaaaaaaaaaaaaaaaaaaaaa</h3>
+            <h3>aaaaaaaaaaaaaaaaaaaaaaaaaaa</h3>
+            <h3>aaaaaaaaaaaaaaaaaaaaaaaaaaa</h3>
+          </Box>
+          
+          <Box>
+            <h3>bbbbbbbbbbbbbbbbbbbbbbbbbbbbb</h3>
+            <h3>bbbbbbbbbbbbbbbbbbbbbbbbbbbbb</h3>
+            <h3>bbbbbbbbbbbbbbbbbbbbbbbbbbbbb</h3>
+            <h3>bbbbbbbbbbbbbbbbbbbbbbbbbbbbb</h3>
+            <h3>bbbbbbbbbbbbbbbbbbbbbbbbbbbbb</h3>
+            <h3>bbbbbbbbbbbbbbbbbbbbbbbbbbbbb</h3>
+          </Box>
+          
+          <Box>
+            <h3>cccccccccccccccccccccccccccccccc</h3>
+            <h3>cccccccccccccccccccccccccccccccc</h3>
+            <h3>cccccccccccccccccccccccccccccccc</h3>
+            <h3>cccccccccccccccccccccccccccccccc</h3>
+            <h3>cccccccccccccccccccccccccccccccc</h3>
+            <h3>cccccccccccccccccccccccccccccccc</h3>
+          </Box>
+          
+          <Box>
+            <h3>ddddddddddddddddddddddddddddddddd</h3>
+            <h3>ddddddddddddddddddddddddddddddddd</h3>
+            <h3>ddddddddddddddddddddddddddddddddd</h3>
+            <h3>ddddddddddddddddddddddddddddddddd</h3>
+            <h3>ddddddddddddddddddddddddddddddddd</h3>
+            <h3>ddddddddddddddddddddddddddddddddd</h3>
           </Box>
         </Box>
       </Container>
