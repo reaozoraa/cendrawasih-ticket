@@ -1,8 +1,11 @@
 import {
     AppBar, Box, Toolbar, CssBaseline, IconButton, Typography, Menu, 
     Container, Avatar, Button, Tooltip, MenuItem, Card, CardActions,
-    CardContent, Tabs, Tab, Paper  } 
+    CardContent, Tabs, Tab, Paper } 
 from '@mui/material/'
+
+import { styled } from '@mui/material/styles';
+
 
 export default function Footer() {
     return (<>
@@ -32,7 +35,7 @@ export default function Footer() {
             display: "flex",
             mb: 2,
           }}
-          className='border flex flex-wrap justify-evenly'
+          className=' flex flex-wrap justify-evenly'
         >
           <Box>
             <h3>aaaaaaaaaaaaaaaaaaaaaaaaaaa</h3>
@@ -70,6 +73,20 @@ export default function Footer() {
             <h3>ddddddddddddddddddddddddddddddddd</h3>
           </Box>
         </Box>
+        <Box
+        sx={{
+          flexGrow: 1,
+          justifyContent: "center",
+          display: "flex",
+          mb: 2,
+        }}
+        className="" 
+        >
+          <Typography variant="caption" color="initial">
+              Copyright ©2022. [] Limited
+          </Typography>
+        </Box>
+
       </Container>
     </Paper>    
     </>)

@@ -4,7 +4,6 @@ import {
     CardContent, Tabs, Tab  } 
 from '@mui/material/'
 
-
-export default function FlightResult() {
+export default function profile() {
     return (<></>)
 }

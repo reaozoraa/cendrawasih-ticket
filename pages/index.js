@@ -93,34 +93,36 @@ function Home() {
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
             backgroundSize: 'cover',
-            backgroundPosition: 'bottom left',
+            backgroundPosition: 'bottom',
           }}>
       <CssBaseline />
       <Navbar />
-      <Container maxWidth="lg" sx={{ position: "relative", zIndex: "10", transform: "translateY(50%)"  }}>
-        <Card sx={{ minWidth: 275, mt: "10px" }}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs value={formSection} variant="fullWidth" onChange={handleFormSection} aria-label="">
-              <Tab label={ <div className='flex text-lg'><Flight /> Flight</div> } {...a11yProps(0)}  />
-              <Tab label={ <div className='flex text-lg'><Hotel />  Hotel</div> } {...a11yProps(1)}  />
-              {/* <Tab icon={<Flight />} label="Flight" {...a11yProps(0)}  />
-              <Tab icon={<Hotel />} label="Hotel" {...a11yProps(1)}  /> */}
-            </Tabs>
-            
-          </Box>
-          <CardContent>
-            <TabPanel value={formSection} index={0}>
-              <FlightSearch />
-            </TabPanel>
-            <TabPanel value={formSection} index={1}>
-              <HotelSearch></HotelSearch>
-            </TabPanel>
-          </CardContent>  
-        </Card>
-      </Container>
+      <Container maxWidth="auto"  sx={{height: "300px"}} />
       <Container maxWidth="auto"  sx={{backgroundColor: "white", height: "100vh", position: "absolute", color: "black"}}>
-        {/* AIR */}
-        <Container maxWidth="auto"  sx={{backgroundColor: "blue", height: "50%", height: "300px"}} />
+        {/* transform: "translateY(50%)"  */}
+        <Container maxWidth="lg" sx={{ position: "relative", zIndex: "10", transform: "translateY(-70%)" }}>
+          <Card sx={{ minWidth: 275, mt: "10px" }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs value={formSection} variant="fullWidth" onChange={handleFormSection} aria-label="">
+                <Tab label={ <div className='flex text-lg'><Flight /> Flight</div> } {...a11yProps(0)}  />
+                <Tab label={ <div className='flex text-lg'><Hotel />  Hotel</div> } {...a11yProps(1)}  />
+                {/* <Tab icon={<Flight />} label="Flight" {...a11yProps(0)}  />
+                <Tab icon={<Hotel />} label="Hotel" {...a11yProps(1)}  /> */}
+              </Tabs>
+              
+            </Box>
+            <CardContent>
+              <TabPanel value={formSection} index={0}>
+                <FlightSearch />
+              </TabPanel>
+              <TabPanel value={formSection} index={1}>
+                <HotelSearch></HotelSearch>
+              </TabPanel>
+            </CardContent>  
+          </Card>
+        </Container>
+        {/* <Container maxWidth="auto"  sx={{backgroundColor: "blue", height: "50%", height: "300px"}} /> */}
+        {/* content */}
       </Container>
       <Footer />
       
