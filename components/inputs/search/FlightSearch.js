@@ -208,11 +208,17 @@ export default function FlightSearch() {
                         renderInput={(params) => <TextField {...params} label="freeSolo" />}
                     />
                     <SyncAlt sx={{ fontSize: "30px"}} />
-                    <TextField
+                    <Autocomplete
+                        id="free-solo-demo"
+                        freeSolo
+                        options={top100Films.map((option) => option.title)}
+                        renderInput={(params) => <TextField {...params} label="freeSolo" />}
+                    />
+                    {/* <TextField
                         id=""
                         label="Ke"
                         defaultValue="bandung"
-                    />
+                    /> */}
                 </Box>
                 <Box className='flex items-center '>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
