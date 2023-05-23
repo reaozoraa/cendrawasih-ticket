@@ -148,6 +148,14 @@ export default function SignInSide() {
               >
                 {isLoading ? "Loading" : "Login"}
               </Button>
+              <Button
+                onClick={onGoogleLogin}
+                className="bg-blue-500"
+                fullWidth
+                variant="contained"
+              >
+                Login With Google
+              </Button>
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
