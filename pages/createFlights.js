@@ -1,4 +1,5 @@
 import pb from "@/lib/pocketbase";
+import { data } from "autoprefixer";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -29,18 +30,18 @@ export default function createFlight() {
   async function createFlight(event) {
     event.preventDefault();
     // const formData = new FormData(event.target);
-    console.log();
     try {
       const data = {
         origin: event.target.origin.value,
         destination: event.target.destination.value,
-        departure: event.target.departure.value,
-        arrival: event.target.arrival.value,
+        departure: new Date(event.target.departure.value),
+        arrival: new Date(event.target.arrival.value),
         price: event.target.price.value,
         airplane_code: event.target.airplane_code.value,
         airline: event.target.airline.value,
         total_seat: event.target.total_seat.value,
       };
+      console.log(data);
 
       const record = await pb.collection("flight_tickets").create(data);
       console.log(record);
@@ -90,12 +91,14 @@ export default function createFlight() {
       </div>
       <div>
         <label>
-          Derpature Date :<input type="date" name="departure" />
+          Derpature Date :
+          <input type="datetime-local" name="departure" id="departure" />
         </label>
       </div>
       <div>
         <label>
-          Arrival Date : <input type="date" name="arrival" />
+          Arrival Date :{" "}
+          <input type="datetime-local" name="arrival" id="arrival" />
         </label>
       </div>
       <div>
