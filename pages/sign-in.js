@@ -150,7 +150,7 @@ export default function SignInSide() {
               </Button>
               <Button
                 onClick={onGoogleLogin}
-                className="bg-blue-500"
+                className="bg-green-500"
                 fullWidth
                 variant="contained"
               >
