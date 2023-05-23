@@ -12,6 +12,8 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import pb from "@/lib/pocketbase";
+import { useRouter } from "next/router";
 
 function Copyright(props) {
   return (
@@ -34,14 +36,33 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInSide() {
-  const handleSubmit = (event) => {
+  const router = useRouter();
+  async function signUp(event) {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+    try {
+      const data = {
+        username: event.target.username.value,
+        email: event.target.email.value,
+        password: event.target.password.value,
+        emailVisibility: true,
+        passwordConfirm: event.target.passwordConfirm.value,
+      };
+      const record = await pb.collection("cendrawasih_users").create(data);
+      console.log(record);
+      console.log("success");
+      router.push("/sign-in");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  //   const handleSubmit = (event) => {
+  //     event.preventDefault();
+  //     const data = new FormData(event.currentTarget);
+  //     console.log({
+  //       email: data.get("email"),
+  //       password: data.get("password"),
+  //     });
+  //   };
 
   return (
     <ThemeProvider theme={theme}>
@@ -79,12 +100,7 @@ export default function SignInSide() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
-              sx={{ mt: 1 }}
-            >
+            <Box component="form" noValidate onSubmit={signUp} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -119,10 +135,10 @@ export default function SignInSide() {
                 margin="normal"
                 required
                 fullWidth
-                name="confirm-password"
+                name="passwordConfirm"
                 label="Confirm password"
                 type="password"
-                id="confirm-password"
+                id="passwordConfirm"
                 // autoComplete="current-password"
               />
               <FormControlLabel
@@ -136,7 +152,7 @@ export default function SignInSide() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                Sign Up
               </Button>
               <Grid container>
                 {/* <Grid item xs>

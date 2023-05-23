@@ -210,7 +210,11 @@ export default function Navbar() {
                 >
                   Login
                 </Button>
-                <Button variant="contained" className="bg-blue-500 mx-1">
+                <Button
+                  variant="contained"
+                  onClick={() => router.push("/sign-up")}
+                  className="bg-blue-500 mx-1"
+                >
                   Register
                 </Button>
               </Box>
