@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 
 import {
@@ -18,6 +20,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateField } from '@mui/x-date-pickers/DateField';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { useAmp } from 'next/amp';
 
 
 const seats = [
@@ -164,10 +167,22 @@ const top100Films = [
 
 
 export default function FlightSearch() {
-    const [radioValue, setRadio] = React.useState('one-way');
-    const [dateValue, setDate] = React.useState(dayjs('2022-04-17'));
-    const [checked, setChecked] = React.useState(true);
-    const [num, setNum] = React.useState();
+    // router
+    const router = useRouter();
+
+    const [radioValue, setRadio] = useState('one-way');
+    const [dateValue, setDate] = useState(dayjs('2022-04-17'));
+    const [checked, setChecked] = useState(true);
+    const [num, setNum] = useState();
+
+    // TEXTFIELD USESTATE
+    const [fromPlace, setFrom] = useState(null);
+    const [toPlace, setTo] = useState(null);
+    const [departDate, setDepart] = useState(null);
+    // const [returnDate, setReturnDate] = useState(null);
+    const [passenger, setPassenger] = useState(null);
+    const [seat, setSeat] = useState(null);
+
   
     const handleRegexNumber = (e) => {
       const regex = /^[0-9\b]+$/;
@@ -185,14 +200,19 @@ export default function FlightSearch() {
     const handleRadio = (event) => {
       setRadio(event.target.value);
     };
+
+    const handleSearchFlight = (e) => {
+      e.preventDefault();
+      router.push('/search-result/flight-result');
+    }
   
 
     return (
         <FormControl sx={{ width: "100%", '& .MuiTextField-root': { m: 1, width: '25ch' } }} >
-            <RadioGroup row name="row-radio-buttons-group" sx={{ display: "flex", justifyContent: "center", }} value={radioValue} onChange={handleRadio}>
+            {/* <RadioGroup row name="row-radio-buttons-group" sx={{ display: "flex", justifyContent: "center", }} value={radioValue} onChange={handleRadio}>
             <FormControlLabel value="one-way" control={<Radio />} label="One-way/Round trip" name='same'  />
             <FormControlLabel value="multi-city" control={<Radio />} name='same' label="Multi-city" />
-            </RadioGroup>
+            </RadioGroup> */}
             <Box className="flex flex-wrap justify-between">
             <Box className="" sx={{ maxWidth: "530px", minWidth: "300px"  }}>
                 <Box className='flex items-center '>
@@ -202,17 +222,17 @@ export default function FlightSearch() {
                         defaultValue="jakarta"
                     /> */}
                     <Autocomplete
-                        id="free-solo-demo"
+                        id="demo"
                         freeSolo
                         options={top100Films.map((option) => option.title)}
-                        renderInput={(params) => <TextField {...params} label="freeSolo" />}
+                        renderInput={(params) => <TextField {...params} label="Dari" />}
                     />
                     <SyncAlt sx={{ fontSize: "30px"}} />
                     <Autocomplete
-                        id="free-solo-demo"
+                        id="demo"
                         freeSolo
                         options={top100Films.map((option) => option.title)}
-                        renderInput={(params) => <TextField {...params} label="freeSolo" />}
+                        renderInput={(params) => <TextField {...params} label="Ke" />}
                     />
                     {/* <TextField
                         id=""
@@ -228,14 +248,14 @@ export default function FlightSearch() {
                         onChange={(newValue) => setDate(newValue)}
                     />
                     </LocalizationProvider>   
-                    <East></East>
+                    {/* <East sx={{ fontSize: "30px"}}></East>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
                         label="Tanggal Pergi"
                         value={dateValue}
                         onChange={(newValue) => setDate(newValue)}
                     />
-                    </LocalizationProvider>   
+                    </LocalizationProvider>    */}
 
                     {/* <FormControlLabel control={<Checkbox />} label="Label" /> */}
                 </Box>
@@ -244,7 +264,7 @@ export default function FlightSearch() {
                 <TextField 
                 type="number"
                 id="outlined-basic"
-                label="Numbers"
+                label="Jumlah Penumpang"
                 variant="outlined"
                 onChange={(e) => handleRegexNumber(e)}
                 onSelect={(e) => handleRegexNumber(e)}
@@ -265,7 +285,7 @@ export default function FlightSearch() {
                 <TextField
                 id="seats"
                 select
-                label="Select seat"
+                label="Kelas Penerbangan"
                 defaultValue="economy"
                 helperText="Please select your seat"
                 type="number"
@@ -280,7 +300,7 @@ export default function FlightSearch() {
             </Box>
             </Box>
             <Box className='flex justify-end'>
-                <Button variant="contained" className='bg-blue-500'>Search</Button>
+                <Button variant="contained" className='bg-blue-500' onClick={handleSearchFlight}>Search</Button>
             </Box>
 
         </FormControl>)

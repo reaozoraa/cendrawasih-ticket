@@ -11,7 +11,7 @@ import style  from '../styles/Home.module.css';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
 import { Flight, Hotel, LocalHotelOutlined } from '@mui/icons-material';
-import { Questrial } from 'next/font/google'
+
 
 
 import Footer from '../components/layouts/Footer';
@@ -19,28 +19,6 @@ import Navbar from '../components/layouts/Navbar';
 import FlightSearch from '../components/inputs/search/FlightSearch';
 import HotelSearch from '../components/inputs/search/HotelSearch';
 
-const questrial = Questrial({
-  subsets: ['latin'],
-  weight: ['400'],
-})
-
-const theme = createTheme({
-  typography: {
-    fontFamily: questrial.style.fontFamily,
-  },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: `
-        @font-face {
-          font-family: questrial.style.fontFamily;
-          font-style: normal;
-          font-display: swap;
-          font-weight: 400;
-        }
-      `,
-    },
-  },
-});
 
 
 function a11yProps(index) {
@@ -76,6 +54,9 @@ function TabPanel(props) {
   value: PropTypes.number.isRequired,
   };
 
+// FOOTER
+// sx={{ mb: { xs: '20px', md: '0' } }}
+
 function Home() {
   const [formSection, setFormSection] = React.useState(0);
 
@@ -86,7 +67,7 @@ function Home() {
 
   return (
     <>
-    <ThemeProvider theme={theme}>
+    
     <main className={style.main} style={{
             backgroundImage: 'url(/background.jpeg)',
             backgroundRepeat: 'no-repeat',
@@ -127,7 +108,6 @@ function Home() {
       <Footer />
       
     </main>
-    </ThemeProvider>
     </>
   );
 }

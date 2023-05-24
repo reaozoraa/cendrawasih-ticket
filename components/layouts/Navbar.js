@@ -17,7 +17,7 @@ const pages = ['Saved'];
 const settings = [
 {
     label: "Profile",
-    link: ""
+    link: "profile"
 },
 {
     label: "Logout",
