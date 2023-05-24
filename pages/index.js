@@ -3,8 +3,8 @@ import { Inter } from "next/font/google";
 import PocketBase from "pocketbase";
 import { use, useEffect } from "react";
 import { auth } from "./firebase";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
+// import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+// import { useAuthState } from "react-firebase-hooks/auth";
 import useLogout from "./hooks/useLogout";
 
 const inter = Inter({ subsets: ["latin"] });

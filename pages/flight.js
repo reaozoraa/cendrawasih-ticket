@@ -14,7 +14,7 @@ export default function flight() {
   };
 
   async function getFlight() {
-    const resultList = await pb.collection("flight_tickets").getFullList({
+    const resultList = await pb.collection("flight_result").getFullList({
       expand: "origin,destination,airline,price,depature,arrival",
     });
     setFlights(resultList);

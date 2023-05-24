@@ -43,7 +43,7 @@ export default function createFlight() {
       };
       console.log(data);
 
-      const record = await pb.collection("flight_tickets").create(data);
+      const record = await pb.collection("flight_result").create(data);
       console.log(record);
       console.log("success");
       router.push("/flight");
