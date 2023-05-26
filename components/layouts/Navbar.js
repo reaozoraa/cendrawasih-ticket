@@ -46,29 +46,10 @@ export default function Navbar() {
     setAnchorElUser(null);
     };
     return (      
-    <AppBar position="static" sx={{ backgroundColor:"white", color: "black"}}>
+    <AppBar position="static" sx={{ backgroundColor:"white", color: "black"}} className="shadow-xl">
         <Container maxWidth="xl">
         <Toolbar disableGutters>
-            {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-            <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-                mr: 2,
-                display: { xs: 'none', md: 'flex' },
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-            }}
-            >
-            LOGO
-            </Typography> */}
-
-            <Box sx={{ flexGrow: 0, display: { xs: 'flex', md: 'none' } }}>
+            {/* <Box sx={{ flexGrow: 0, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -103,7 +84,7 @@ export default function Navbar() {
                 </MenuItem>
                 ))}
             </Menu>
-            </Box>
+            </Box> */}
 
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                 <Image

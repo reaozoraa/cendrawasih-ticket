@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 
 import {
-Button, Box, CssBaseline, MenuItem, Radio, RadioGroup, FormControl, FormControlLabel, 
+Button, Box, Typography, CssBaseline, MenuItem, Radio, RadioGroup, FormControl, FormControlLabel, 
 FormLabel, TextField, Grid, Checkbox, InputLabel, OutlinedInput, Autocomplete, Stack } 
 from '@mui/material/'
 
@@ -170,25 +170,21 @@ export default function FlightSearch() {
     // router
     const router = useRouter();
 
-    const [radioValue, setRadio] = useState('one-way');
-    const [dateValue, setDate] = useState(dayjs('2022-04-17'));
-    const [checked, setChecked] = useState(true);
-    const [num, setNum] = useState();
+    // const [radioValue, setRadio] = useState('one-way');
+    // const [checked, setChecked] = useState(true);
 
     // TEXTFIELD USESTATE
-    const [fromPlace, setFrom] = useState(null);
-    const [toPlace, setTo] = useState(null);
-    const [departDate, setDepart] = useState(null);
+    const [fromPlace, setFrom] = useState("jakarta");
+    const [toPlace, setTo] = useState("halim");
+    const [dateValue, setDate] = useState(dayjs('2022-04-17'));
     // const [returnDate, setReturnDate] = useState(null);
-    const [passenger, setPassenger] = useState(null);
-    const [seat, setSeat] = useState(null);
+    // const [passenger, setPassenger] = useState(null);
+    const [seat, setSeat] = useState('economy');
+    const [num, setNum] = useState(1);
 
   
     const handleRegexNumber = (e) => {
-      const regex = /^[0-9\b]+$/;
-      if (e.target.value === "" || regex.test(e.target.value)) {
         setNum(e.target.value);
-      }
     };
   
   
@@ -203,9 +199,19 @@ export default function FlightSearch() {
 
     const handleSearchFlight = (e) => {
       e.preventDefault();
-      router.push('/search-result/flight-result');
+      // router.push(`/search-result/flight-result?fp=${fromPlace}&tp=${toPlace}&dt=${dateValue}&ps=${num}&st=${seat}`);
+
+      router.push({
+        pathname: '/search-result/flight-result',
+        query: { fp: fromPlace, tp: toPlace, dt: `${dateValue}`, ps: num, st: seat  },
+      })
     }
+
   
+    // useEffect(() => {
+    //   console.log(seat)
+    // }, [seat]);
+
 
     return (
         <FormControl sx={{ width: "100%", '& .MuiTextField-root': { m: 1, width: '25ch' } }} >
@@ -214,6 +220,7 @@ export default function FlightSearch() {
             <FormControlLabel value="multi-city" control={<Radio />} name='same' label="Multi-city" />
             </RadioGroup> */}
             <Box className="flex flex-wrap justify-between">
+            {/* <Typography variant="h4"></Typography> */}
             <Box className="" sx={{ maxWidth: "530px", minWidth: "300px"  }}>
                 <Box className='flex items-center '>
                     {/* <TextField
@@ -224,15 +231,23 @@ export default function FlightSearch() {
                     <Autocomplete
                         id="demo"
                         freeSolo
+                        defaultValue={fromPlace}
                         options={top100Films.map((option) => option.title)}
-                        renderInput={(params) => <TextField {...params} label="Dari" />}
+                        renderInput={(params) => <TextField 
+                          value={fromPlace}
+                          onChange={(e) => {setFrom(e.target.value)}}
+                          {...params} label="Dari" />}
                     />
                     <SyncAlt sx={{ fontSize: "30px"}} />
                     <Autocomplete
                         id="demo"
                         freeSolo
+                        defaultValue={toPlace} 
                         options={top100Films.map((option) => option.title)}
-                        renderInput={(params) => <TextField {...params} label="Ke" />}
+                        renderInput={(params) => <TextField
+                          value={toPlace}
+                          onChange={(e) => {setTo(e.target.value)}}  
+                        {...params} label="Ke" />}
                     />
                     {/* <TextField
                         id=""
@@ -266,8 +281,9 @@ export default function FlightSearch() {
                 id="outlined-basic"
                 label="Jumlah Penumpang"
                 variant="outlined"
-                onChange={(e) => handleRegexNumber(e)}
-                onSelect={(e) => handleRegexNumber(e)}
+                onChange={(e) => setNum(e.target.value)}
+                onKeyDown={(evt) => ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()}
+                // onSelect={(e) => handleRegexNumber(e)}
                 value={num}
                 />
                 {/* <FormControl fullWidth sx={{ m: 1 }}>
@@ -286,9 +302,11 @@ export default function FlightSearch() {
                 id="seats"
                 select
                 label="Kelas Penerbangan"
-                defaultValue="economy"
+                defaultValue={seat}
+                value={seat}
                 helperText="Please select your seat"
                 type="number"
+                onChange={(e) => setSeat(e.target.value)}
                 // fullWidth
                 >
                 {seats.map((option) => (

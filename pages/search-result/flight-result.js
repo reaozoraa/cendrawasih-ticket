@@ -1,3 +1,8 @@
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { FlightJSON } from '../../seeder/flightSeeder';
+
 import {
     AppBar, Box, Toolbar, CssBaseline, IconButton, Typography, Menu, 
     Container, Avatar, Button, Tooltip, MenuItem, Card, CardActions,
@@ -6,6 +11,7 @@ from '@mui/material/'
 
 import Footer from '../../components/layouts/Footer';
 import Navbar from '../../components/layouts/Navbar';
+import Layout from './layout'
 
 import style  from '../../styles/Home.module.css';
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
@@ -27,30 +33,28 @@ const buttonTheme = createTheme({
   });
 
 export default function FlightResult() {
+    const router = useRouter();
+    const { fp, tp, dt, ps, st } = router.query;
 
+    const handleBookingChoice = (e) => {
+        e.preventDefault();
+        router.push('../booking/flight-booking');
+    }
 
+    useEffect(() => {
+        console.log(fp, tp, dt, ps, st);
+    })
 
     return (
-    <main className={style.main} style={{
-            backgroundImage: 'url(/background.jpeg)',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'bottom',
-          }}>
-      <CssBaseline />
-      <Navbar />
-      <Container maxWidth="auto"  sx={{height: "300px"}} />
-      <Container maxWidth="auto"  sx={{backgroundColor: "white", height: "100vh", position: "absolute", color: "black"}}>
+    <Layout>    
         <Typography variant='h5' className='text-blue-500'>Hasil Pencarian</Typography>
         <Card sx={{ minWidth: 275, my: "10px" }}>
             <CardHeader
                 title="Airline name"
                 // subheader="September 14, 2016"
-            />
+                />
             <Box sx={{ mx: "10px" }} className="flex wrap items-end">
-                <Box sx={{ minWidth: "600px" }} className="flex grow items-center justify-between">
+                <Box sx={{ minWidth: "600px" }}  className="flex grow items-center justify-between">
                     <Box className="text-center">
                         <Typography variant='p'>Bandara Soekarno Hatta</Typography>
                         <Typography variant='h6'>Tangerang</Typography>
@@ -67,7 +71,7 @@ export default function FlightResult() {
                     <ThemeProvider theme={buttonTheme}>
                         <Box sx={{ maxWidth: "200px" }} className="text-right">
                             <Typography wrap variant='p'><span className='text-orange-600'>Rp 1.900.000</span>/org</Typography>
-                            <Button fullWidth variant="contained" className='bg-orange-500 text-white' >Pilih</Button>
+                            <Button fullWidth variant="contained" className='bg-orange-500 text-white' onClick={handleBookingChoice}>Pilih</Button>
                         </Box>
                     </ThemeProvider>
                 </Box>
@@ -83,10 +87,6 @@ export default function FlightResult() {
                 </Box> */}
             </CardContent>  
         </Card>
-          
-      </Container>
-      <Footer />
-      
-    </main>
+    </Layout>
     )
 }
