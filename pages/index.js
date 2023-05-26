@@ -1,124 +1,210 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import * as React from "react";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  CssBaseline,
+  createTheme,
+  IconButton,
+  Typography,
+  Menu,
+  Container,
+  Avatar,
+  Button,
+  Tooltip,
+  MenuItem,
+  Card,
+  CardActions,
+  CardContent,
+  Tabs,
+  Tab,
+  ThemeProvider,
+} from "@mui/material/";
 
-const inter = Inter({ subsets: ['latin'] })
+import MenuIcon from "@mui/icons-material/Menu";
+import AdbIcon from "@mui/icons-material/Adb";
+import style from "../styles/Home.module.css";
+import PropTypes from "prop-types";
+import Image from "next/image";
+import { Flight, Hotel, LocalHotelOutlined } from "@mui/icons-material";
+import Navbar from "../components/layouts/Navbar";
+import FlightSearch from "../components/inputs/FlightSearch";
+import HotelSearch from "../components/inputs/HotelSearch";
+import { Questrial } from "next/font/google";
+import { useRouter } from "next/router";
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">pages/index.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+const questrial = Questrial({
+  subsets: ["latin"],
+  weight: ["400"],
+});
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+const theme = createTheme({
+  typography: {
+    fontFamily: questrial.style.fontFamily,
+  },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: `
+        @font-face {
+          font-family: questrial.style.fontFamily;
+          font-style: normal;
+          font-display: swap;
+          font-weight: 400;
+        }
+      `,
+    },
+  },
+});
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
 }
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box>{children}</Box>}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function Home() {
+  const [formSection, setFormSection] = React.useState(0);
+
+  const handleFormSection = (event, newValue) => {
+    setFormSection(newValue);
+  };
+
+  return (
+    <>
+      <ThemeProvider theme={theme}>
+        <main
+          className={style.main}
+          style={{
+            backgroundImage: "url(/background.jpeg)",
+            backgroundRepeat: "no-repeat",
+            backgroundColor: (t) =>
+              t.palette.mode === "light"
+                ? t.palette.grey[50]
+                : t.palette.grey[900],
+            backgroundSize: "cover",
+            backgroundPosition: "bottom left",
+          }}
+        >
+          <CssBaseline />
+          <Navbar />
+          <Container
+            maxWidth="xl"
+            sx={{
+              position: "relative",
+              zIndex: "10",
+              transform: "translateY(50%)",
+            }}
+          >
+            <Card sx={{ minWidth: 275, mt: "10px" }}>
+              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                <Tabs
+                  value={formSection}
+                  variant="fullWidth"
+                  onChange={handleFormSection}
+                  aria-label=""
+                >
+                  <Tab
+                    label={
+                      <div className="flex text-lg">
+                        <Flight /> Flight
+                      </div>
+                    }
+                    {...a11yProps(0)}
+                  />
+                  <Tab
+                    label={
+                      <div className="flex text-lg">
+                        <Hotel />  Hotel
+                      </div>
+                    }
+                    {...a11yProps(1)}
+                  />
+                  {/* <Tab icon={<Flight />} label="Flight" {...a11yProps(0)}  />
+              <Tab icon={<Hotel />} label="Hotel" {...a11yProps(1)}  /> */}
+                </Tabs>
+              </Box>
+              <CardContent>
+                <TabPanel value={formSection} index={0}>
+                  <FlightSearch />
+                </TabPanel>
+                <TabPanel value={formSection} index={1}>
+                  <HotelSearch></HotelSearch>
+                </TabPanel>
+              </CardContent>
+            </Card>
+          </Container>
+          <Container
+            maxWidth="auto"
+            sx={{
+              position: "relative",
+              backgroundColor: "white",
+              height: "100vh",
+              position: "absolute",
+              color: "black",
+            }}
+          ></Container>
+        </main>
+      </ThemeProvider>
+    </>
+  );
+}
+export default Home;
+
+/**
+ <FormControl sx={{ width: "100%", '& .MuiTextField-root': { m: 1, width: '25ch' } }} >
+              <RadioGroup row name="row-radio-buttons-group" sx={{ display: "flex", justifyContent: "center", }} value={radioValue} onChange={handleRadio}>
+                <FormControlLabel value="one-way" control={<Radio />} label="One-way/Round trip" name='same'  />
+                <FormControlLabel value="multi-city" control={<Radio />} name='same' label="Multi-city" />
+              </RadioGroup>
+              <Box className='flex items-center '>
+                <TextField
+                  id=""
+                  label="Dari"
+                  defaultValue="jakarta"
+                />
+                <SyncAlt sx={{ fontSize: "30px"}} />
+                <TextField
+                  id=""
+                  label="Ke"
+                  defaultValue="bandung"
+                />
+              </Box>
+              <Box className='flex items-center '>
+                <TextField
+                  id=""
+                  label="Dari"
+                  defaultValue="jakarta"
+                />
+                <FormControlLabel 
+                  value="one-way" 
+                  control={<Radio />} 
+                  label="tanggal kembali" 
+                  name='same'
+                />
+              </Box>
+            
+            </FormControl>
+ */
