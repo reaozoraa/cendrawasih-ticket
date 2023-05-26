@@ -28,6 +28,7 @@ import style from "../../styles/Home.module.css";
 import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
 import pb from "@/lib/pocketbase";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const buttonTheme = createTheme({
   status: {
@@ -47,6 +48,7 @@ const buttonTheme = createTheme({
 
 export default function FlightResult() {
   const [flights, setFlights] = useState([]);
+  const router = useRouter();
   // const [airlines, setAirlines] = useState([]);
   var options = {
     weekday: "long",
@@ -167,6 +169,11 @@ export default function FlightResult() {
                         variant="contained"
                         className="bg-orange-500 text-white"
                         sx={{ width: "200px" }}
+                        onClick={() =>
+                          pb.authStore.isValid
+                            ? router.push("/tiket")
+                            : router.push("/sign-in")
+                        }
                       >
                         Pilih
                       </Button>
