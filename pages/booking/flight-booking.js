@@ -1,7 +1,7 @@
 import {
     AppBar, Box, Toolbar, CssBaseline, IconButton, Typography, Menu, 
     Container, Avatar, Button, Tooltip, MenuItem, Card, CardActions,
-    CardContent, Tabs, Tab, ThemeProvider, createTheme, CardHeader  } 
+    CardContent, Tabs, Tab, ThemeProvider, createTheme, CardHeader, TextField  } 
 from '@mui/material/'
 
 import Footer from '../../components/layouts/Footer';
@@ -14,8 +14,17 @@ import Layout from './layout'
 export default function FlightResult() {
     return (
       <Layout>
-        <Card>
-          
+        <Card sx={{ maxWidth: 500 }}>
+          <CardHeader
+            title="Data Pemesanan (untuk E-tiket)"
+            // subheader=""
+          />
+          <TextField
+            required
+            id="outlined-required"
+            label="Required"
+            defaultValue="Hello World"
+          />
         </Card>
       </Layout>
     )
