@@ -14,10 +14,10 @@ export default function Layout({children}) {
     <main className={style.main} >
       <CssBaseline />
       <NavbarExc />
-      <Container maxWidth="auto"  sx={{backgroundColor: "white", height: "100vh", position: "absolute", color: "black"}}>
+      <Container maxWidth="auto"  sx={{backgroundColor: "white", height: "auto",  position: "absolute", color: "black"}}>
         {children}
       </Container>
-      <Footer />
+      {/* <Footer /> */}
       
     </main>
     )

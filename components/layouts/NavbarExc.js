@@ -57,6 +57,7 @@ export default function NavbarExc() {
             <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                 <Image
                 src="/brand/logoonly.png"
+                priority
                 alt="the logo"
                 width={50}
                 height={50}

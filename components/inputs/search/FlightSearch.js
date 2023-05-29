@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-
+import validator  from '../../../utils/validator';
 
 import {
 Button, Box, Typography, CssBaseline, MenuItem, Radio, RadioGroup, FormControl, FormControlLabel, 
-FormLabel, TextField, Grid, Checkbox, InputLabel, OutlinedInput, Autocomplete, Stack } 
+FormLabel, TextField, Grid, Checkbox, InputLabel, OutlinedInput, Autocomplete, Stack, Field } 
 from '@mui/material/'
 
 import SyncAlt from '@mui/icons-material/SyncAlt';
@@ -171,7 +171,7 @@ export default function FlightSearch() {
     const router = useRouter();
 
     // const [radioValue, setRadio] = useState('one-way');
-    // const [checked, setChecked] = useState(true);
+    const [errorMessage, setErrorMessage] = useState(null);
 
     // TEXTFIELD USESTATE
     const [fromPlace, setFrom] = useState("jakarta");
@@ -183,24 +183,29 @@ export default function FlightSearch() {
     const [num, setNum] = useState(1);
 
   
-    const handleRegexNumber = (e) => {
-        setNum(e.target.value);
-    };
+    // const handleRegexNumber = (e) => {
+    //     setNum(e.target.value);
+    // };
   
   
-    const handleChange = (event) => {
-      setChecked(event.target.checked);
-    };
+    // const handleChange = (event) => {
+    //   setChecked(event.target.checked);
+    // };
   
   
-    const handleRadio = (event) => {
-      setRadio(event.target.value);
-    };
+    // const handleRadio = (event) => {
+    //   setRadio(event.target.value);
+    // };
 
     const handleSearchFlight = (e) => {
       e.preventDefault();
       // router.push(`/search-result/flight-result?fp=${fromPlace}&tp=${toPlace}&dt=${dateValue}&ps=${num}&st=${seat}`);
-
+      const flightInputs = [fromPlace, toPlace, `${dateValue}`, parseInt(num), seat];
+      if (validator(flightInputs)) {
+        setErrorMessage("*please fill up the form with the right value");
+        return
+      }
+      setErrorMessage(null);
       router.push({
         pathname: '/search-result/flight-result',
         query: { fp: fromPlace, tp: toPlace, dt: `${dateValue}`, ps: num, st: seat  },
@@ -222,6 +227,9 @@ export default function FlightSearch() {
             <Box className="flex flex-wrap justify-between">
             {/* <Typography variant="h4"></Typography> */}
             <Box className="" sx={{ maxWidth: "530px", minWidth: "300px"  }}>
+                {errorMessage && 
+                  <Typography variant='h6' className="text-red-500" sx={{ marginLeft: 2 }}>{errorMessage}</Typography>
+                }
                 <Box className='flex items-center '>
                     {/* <TextField
                         id=""
