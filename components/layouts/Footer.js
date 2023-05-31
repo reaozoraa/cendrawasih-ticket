@@ -32,7 +32,7 @@ export default function Footer() {
         sx={{
           width: "100%",
           position: "relative",
-          top: "100%",
+          // top: "100%",
           zIndex: "999",
         }}
         component="footer"

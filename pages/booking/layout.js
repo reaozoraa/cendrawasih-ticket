@@ -21,8 +21,8 @@ import {
   CardHeader,
 } from "@mui/material/";
 
-import Footer from "../../components/layouts/Footer";
-import NavbarExc from "../../components/layouts/NavbarExc";
+import Footer from "@/components/layouts/Footer";
+import NavbarExc from "@/components/layouts/NavbarExc";
 
 import style from "../../styles/Home.module.css";
 
@@ -36,13 +36,13 @@ export default function Layout({ children }) {
         sx={{
           backgroundColor: "white",
           height: "auto",
-          position: "absolute",
+          // position: "absolute",
           color: "black",
         }}
       >
         {children}
       </Container>
-      {/* <Footer /> */}
+      <Footer />
     </main>
   );
 }

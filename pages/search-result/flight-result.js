@@ -49,6 +49,15 @@ const buttonTheme = createTheme({
 export default function FlightResult() {
   const [flights, setFlights] = useState([]);
   const router = useRouter();
+  const { fp, tp, dt, ps, st } = router.query;
+
+  const handleBookingChoice = (e) => {
+    e.preventDefault();
+    pb.authStore.isValid
+      ? router.push("../booking/flight-booking")
+      : router.push("/sign-in");
+  };
+
   // const [airlines, setAirlines] = useState([]);
   var options = {
     weekday: "long",
@@ -169,11 +178,12 @@ export default function FlightResult() {
                         variant="contained"
                         className="bg-orange-500 text-white"
                         sx={{ width: "200px" }}
-                        onClick={() =>
-                          pb.authStore.isValid
-                            ? router.push("/tiket")
-                            : router.push("/sign-in")
-                        }
+                        // onClick={() =>
+                        //   pb.authStore.isValid
+                        //     ? router.push("/tiket")
+                        //     : router.push("/sign-in")
+                        // }
+                        onClick={handleBookingChoice}
                       >
                         Pilih
                       </Button>

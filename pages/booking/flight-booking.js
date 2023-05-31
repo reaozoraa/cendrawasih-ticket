@@ -42,7 +42,7 @@ import MuiPhoneNumber from "material-ui-phone-number-2";
 // import "react-phone-number-input/style.css";
 // import PhoneInput from 'react-phone-number-input'
 
-// import Footer from '../../components/layouts/Footer';
+import Footer from "@/components/layouts/Footer";
 // import NavbarExc from '../../components/layouts/NavbarExc';
 import Warning from "@mui/icons-material/Warning";
 
@@ -58,7 +58,7 @@ export default function FlightResult() {
   const [dateValue, setDate] = useState(dayjs());
   const [dateValueExpire, setDateExpire] = useState(dayjs());
   const [dateError, setDateError] = useState(null);
-  const [num, setNum] = useState(null);
+  // const [num, setNum] = useState(null);
   const {
     register,
     handleSubmit,
@@ -395,7 +395,7 @@ export default function FlightResult() {
             </Box>
           </Card>
           {/* <input type="submit" /> */}
-          <Button variant="contained" className="bg-blue-500" type="submit">
+          <Button variant="contained" className="bg-blue-500 m-2" type="submit">
             Lanjut
           </Button>
         </Box>
