@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useRouter } from "next/router";
 
 import {
   AppBar,
@@ -19,20 +20,30 @@ import {
   Tabs,
   Tab,
 } from "@mui/material/";
-import { useRouter } from "next/router";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import AdbIcon from "@mui/icons-material/Adb";
-import { BookmarkBorder } from "@mui/icons-material";
+import { BookmarkBorder, Route } from "@mui/icons-material";
 import Image from "next/image";
+import Link from "next/link";
 import pb from "@/lib/pocketbase";
 // import logo from '../public/brand/logo.png';
 import useLogout from "@/hooks/useLogout";
 // import { userAccessToken, fetchUser } from "../../utils/fetchUserDetail";
 
-const pages = ["Saved"];
-// const settings = ["Profile", "Logout"];
+// import logo from '../public/brand/logo.png';
 
+const pages = ["Saved"];
+const settings = [
+  {
+    label: "Profile",
+    link: "profile",
+  },
+  {
+    label: "Logout",
+    link: "sign-in",
+  },
+];
 const bull = (
   <Box
     component="span"
@@ -47,6 +58,7 @@ export default function Navbar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const router = useRouter();
   const logout = useLogout();
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -61,66 +73,50 @@ export default function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
   return (
-    <AppBar position="static" sx={{ backgroundColor: "white", color: "black" }}>
+    <AppBar
+      position="static"
+      sx={{ backgroundColor: "white", color: "black" }}
+      className="shadow-xl"
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-            <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-                mr: 2,
-                display: { xs: 'none', md: 'flex' },
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-            }}
-            >
-            LOGO
-            </Typography> */}
-
-          <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
+          {/* <Box sx={{ flexGrow: 0, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
             >
-              <MenuIcon />
+                <MenuIcon />
             </IconButton>
             <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                display: { xs: 'block', md: 'none' },
+                }}
             >
-              {pages.map((page) => (
+                {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                    <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
-              ))}
+                ))}
             </Menu>
-          </Box>
+            </Box> */}
 
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <Image
@@ -134,6 +130,7 @@ export default function Navbar() {
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <Image
               src="/brand/logoonly.png"
+              priority
               alt="the logo"
               width={50}
               height={50}
@@ -149,16 +146,19 @@ export default function Navbar() {
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "inherit", display: "block" }}
+                className="flex items-center"
               >
                 <BookmarkBorder />
-                {page}
+                <Typography variant="p" sx={{ display: "inline" }}>
+                  {page}
+                </Typography>
               </Button>
             ))}
           </Box>
 
           {/* UNAUTHENTICATED */}
           {pb.authStore.isValid ? (
-            <Box sx={{ flexGrow: 0 }}>
+            <Box sx={{ flexGrow: 0 }} className="border">
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
@@ -217,8 +217,6 @@ export default function Navbar() {
               </Button>
             </Box>
           )}
-
-          {/* AUTHENTICATED */}
         </Toolbar>
       </Container>
     </AppBar>
