@@ -29,6 +29,8 @@ import Link from "next/link";
 import pb from "@/lib/pocketbase";
 // import logo from '../public/brand/logo.png';
 import useLogout from "@/hooks/useLogout";
+import dynamic from "next/dynamic";
+
 // import { userAccessToken, fetchUser } from "../../utils/fetchUserDetail";
 
 // import logo from '../public/brand/logo.png';
@@ -53,7 +55,7 @@ const bull = (
   </Box>
 );
 
-export default function Navbar() {
+function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const router = useRouter();
@@ -222,3 +224,5 @@ export default function Navbar() {
     </AppBar>
   );
 }
+
+export default dynamic(() => Promise.resolve(Navbar), { ssr: false });
