@@ -2,6 +2,7 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import validator from "@/utils/validator";
+// import objectSearcher from "@/utils/objectSearcher";
 
 import {
   Button,
@@ -61,21 +62,20 @@ export default function FlightSearch() {
   const [airport, setAirport] = useState([]);
 
   const [open, setOpen] = useState(false);
+  const [openTwo, setOpenTwo] = useState(false);
   const [options, setOptions] = useState([]);
   const loading = open && options.length === 0;
+  const loadingTwo = openTwo && options.length === 0;
 
   async function getAirport() {
     try {
       const airports = await pb.collection("indonesian_airport").getFullList();
-      console.log(airports);
+      console.log(airports[0]);
       setOptions(airports);
     } catch (error) {
       console.log(error);
     }
   }
-  // useEffect(() => {
-  //   getAirport();
-  // }, []);
 
   useEffect(() => {
     let active = true;
@@ -94,13 +94,21 @@ export default function FlightSearch() {
   }, [loading]);
 
   useEffect(() => {
-    if (!open) {
-      // setOptions([]);
+    let active = true;
+    if (!loadingTwo) {
+      return undefined;
     }
-  }, [open]);
+    (async () => {
+      // ASYNC HERE
+      if (active) {
+        getAirport();
+      }
+    })();
+    return () => {
+      active = false;
+    };
+  }, [loadingTwo]);
 
-  // const [radioValue, setRadio] = useState('one-way');
-  // const [checked, setChecked] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const [dateError, setDateError] = useState(null);
 
@@ -109,11 +117,9 @@ export default function FlightSearch() {
   const tomorrow = dayjs().add(5, "year");
 
   // TEXTFIELD USESTATE
-  const [fromPlace, setFrom] = useState("jakarta");
-  const [toPlace, setTo] = useState("halim");
+  const [fromPlace, setFrom] = useState(null);
+  const [toPlace, setTo] = useState(null);
   const [dateValue, setDate] = useState(dayjs());
-  // const [returnDate, setReturnDate] = useState(null);
-  // const [passenger, setPassenger] = useState(null);
   const [seat, setSeat] = useState("economy");
   const [num, setNum] = useState(1);
 
@@ -145,113 +151,130 @@ export default function FlightSearch() {
   };
 
   useEffect(() => {
-    console.log(dateError);
-  }, [dateError]);
+    console.log(fromPlace, toPlace);
+  }, [dateError, fromPlace, toPlace]);
 
   return (
-    <FormControl
-      sx={{ width: "100%", "& .MuiTextField-root": { m: 1, width: "25ch" } }}
-    >
-      {/* <RadioGroup row name="row-radio-buttons-group" sx={{ display: "flex", justifyContent: "center", }} value={radioValue} onChange={handleRadio}>
+    <form onSubmit={(e) => handleSearchFlight(e)}>
+      <FormControl
+        sx={{ width: "100%", "& .MuiTextField-root": { m: 1, width: "25ch" } }}
+      >
+        {/* <RadioGroup row name="row-radio-buttons-group" sx={{ display: "flex", justifyContent: "center", }} value={radioValue} onChange={handleRadio}>
             <FormControlLabel value="one-way" control={<Radio />} label="One-way/Round trip" name='same'  />
             <FormControlLabel value="multi-city" control={<Radio />} name='same' label="Multi-city" />
             </RadioGroup> */}
-      <Box className="flex flex-wrap justify-between">
-        {/* <Typography variant="h4"></Typography> */}
-        <Box className="" sx={{ maxWidth: "530px", minWidth: "300px" }}>
-          {errorMessage && (
-            <Typography
-              variant="h6"
-              className="text-red-500 m-0 p-0"
-              sx={{ marginLeft: 2 }}
-            >
-              {errorMessage}
-            </Typography>
-          )}
-          <Box className="flex items-center flex-wrap">
-            {/* <TextField
+        <Box className="flex flex-wrap justify-between">
+          {/* <Typography variant="h4"></Typography> */}
+          <Box className="" sx={{ maxWidth: "530px", minWidth: "300px" }}>
+            {errorMessage && (
+              <Typography
+                variant="h6"
+                className="text-red-500 m-0 p-0"
+                sx={{ marginLeft: 2 }}
+              >
+                {errorMessage}
+              </Typography>
+            )}
+            <Box className="flex items-center flex-wrap">
+              {/* <TextField
                         id=""
                         label="Dari"
                         defaultValue="jakarta"
                     /> */}
-            <Autocomplete
-              // id="demo"
-              name="origin"
-              open={open}
-              onOpen={() => {
-                setOpen(true);
-              }}
-              onClose={() => {
-                setOpen(false);
-              }}
-              defaultValue={fromPlace}
-              options={options.map((air) => air.airport_location)}
-              loading={loading}
-              // renderInput={(params) => (
-              //   <TextField
-              //     value={fromPlace}
-              //     onChange={(e) => {
-              //       setFrom(e.target.value);
-              //     }}
-              //     {...params}
-              //     label="Dari"
-              //   />
-              // )}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Dari"
-                  InputProps={{
-                    ...params.InputProps,
-                    endAdornment: (
-                      <>
-                        {loading ? (
-                          <CircularProgress color="inherit" size={20} />
-                        ) : null}
-                        {params.InputProps.endAdornment}
-                      </>
-                    ),
-                  }}
-                />
-              )}
-            />
-            <SyncAlt sx={{ fontSize: "30px" }} />
-            <Autocomplete
-              // id="demo"
-              name="destination"
-              id="destination"
-              freeSolo
-              defaultValue={toPlace}
-              options={airport.map((air) => air.airport_location)}
-              renderInput={(params) => (
-                <TextField
-                  value={toPlace}
-                  onChange={(e) => {
-                    setTo(e.target.value);
-                  }}
-                  {...params}
-                  label="Ke"
-                />
-              )}
-            />
-            {/* <TextField
-                        id=""
-                        label="Ke"
-                        defaultValue="bandung"
-                    /> */}
-          </Box>
-          <Box className="flex items-center ">
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                label="Tanggal Pergi"
-                value={dateValue}
-                onError={(newError) => setDateError(newError)}
-                minDate={yesterday}
-                maxDate={tomorrow}
-                onChange={(newValue) => setDate(newValue)}
+              <Autocomplete
+                required
+                id="asynchronous"
+                // sx={{ width: 300 }}
+                renderOption={(props, option) => {
+                  return (
+                    <li {...props} key={option.id}>
+                      {option.airport_location}
+                    </li>
+                  );
+                }}
+                autoHighlight
+                open={open}
+                onOpen={() => setOpen(true)}
+                onClose={() => setOpen(false)}
+                isOptionEqualToValue={(option, value) =>
+                  option.airport_location === value.airport_location
+                }
+                getOptionLabel={(option) => option.airport_location}
+                onChange={(event, value) => setFrom(value.id)}
+                options={options}
+                loading={loading}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Dari"
+                    InputProps={{
+                      ...params.InputProps,
+                      endAdornment: (
+                        <React.Fragment>
+                          {loading ? (
+                            <CircularProgress color="inherit" size={20} />
+                          ) : null}
+                          {params.InputProps.endAdornment}
+                        </React.Fragment>
+                      ),
+                    }}
+                  />
+                )}
               />
-            </LocalizationProvider>
-            {/* <East sx={{ fontSize: "30px"}}></East>
+              <SyncAlt sx={{ fontSize: "30px" }} />
+              <Autocomplete
+                required
+                id="asynchronous-two"
+                // sx={{ width: 300 }}
+                renderOption={(props, option) => {
+                  return (
+                    <li {...props} key={option.id}>
+                      {option.airport_location}
+                    </li>
+                  );
+                }}
+                autoHighlight
+                open={openTwo}
+                onOpen={() => setOpenTwo(true)}
+                onClose={() => setOpenTwo(false)}
+                isOptionEqualToValue={(option, value) =>
+                  option.airport_location === value.airport_location
+                }
+                getOptionLabel={(option) => option.airport_location}
+                onChange={(event, value) => setTo(value.id)}
+                options={options}
+                loading={loadingTwo}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Ke"
+                    InputProps={{
+                      ...params.InputProps,
+                      endAdornment: (
+                        <React.Fragment>
+                          {loadingTwo ? (
+                            <CircularProgress color="inherit" size={20} />
+                          ) : null}
+                          {params.InputProps.endAdornment}
+                        </React.Fragment>
+                      ),
+                    }}
+                  />
+                )}
+              />
+            </Box>
+            <Box className="flex items-center ">
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label="Tanggal Pergi"
+                  value={dateValue}
+                  onError={(newError) => setDateError(newError)}
+                  minDate={yesterday}
+                  maxDate={tomorrow}
+                  onChange={(newValue) => setDate(newValue)}
+                />
+              </LocalizationProvider>
+              {/* <East sx={{ fontSize: "30px"}}></East>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
                         label="Tanggal Pergi"
@@ -260,23 +283,23 @@ export default function FlightSearch() {
                     />
                     </LocalizationProvider>    */}
 
-            {/* <FormControlLabel control={<Checkbox />} label="Label" /> */}
+              {/* <FormControlLabel control={<Checkbox />} label="Label" /> */}
+            </Box>
           </Box>
-        </Box>
-        <Box className="" sx={{ maxWidth: "300px", minWidth: "300px" }}>
-          <TextField
-            type="number"
-            id="outlined-basic"
-            label="Jumlah Penumpang"
-            variant="outlined"
-            onChange={(e) => setNum(e.target.value)}
-            onKeyDown={(evt) =>
-              ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()
-            }
-            // onSelect={(e) => handleRegexNumber(e)}
-            value={num}
-          />
-          {/* <FormControl fullWidth sx={{ m: 1 }}>
+          <Box className="" sx={{ maxWidth: "300px", minWidth: "300px" }}>
+            <TextField
+              type="number"
+              id="outlined-basic"
+              label="Jumlah Penumpang"
+              variant="outlined"
+              onChange={(e) => setNum(e.target.value)}
+              onKeyDown={(evt) =>
+                ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()
+              }
+              // onSelect={(e) => handleRegexNumber(e)}
+              value={num}
+            />
+            {/* <FormControl fullWidth sx={{ m: 1 }}>
                     <InputLabel htmlFor="">Numbers</InputLabel>
                     <OutlinedInput
                     type="number"
@@ -288,34 +311,36 @@ export default function FlightSearch() {
                     value={num}
                     />
                 </FormControl> */}
-          <TextField
-            id="seats"
-            select
-            label="Kelas Penerbangan"
-            defaultValue={seat}
-            value={seat}
-            helperText="Please select your seat"
-            type="number"
-            onChange={(e) => setSeat(e.target.value)}
-            // fullWidth
-          >
-            {seats.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
+            <TextField
+              id="seats"
+              select
+              label="Kelas Penerbangan"
+              defaultValue={seat}
+              value={seat}
+              helperText="Please select your seat"
+              type="number"
+              onChange={(e) => setSeat(e.target.value)}
+              // fullWidth
+            >
+              {seats.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Box>
         </Box>
-      </Box>
-      <Box className="flex justify-end">
-        <Button
-          variant="contained"
-          className="bg-blue-500"
-          onClick={handleSearchFlight}
-        >
-          Search
-        </Button>
-      </Box>
-    </FormControl>
+        <Box className="flex justify-end">
+          <Button
+            variant="contained"
+            className="bg-blue-500"
+            // onClick={handleSearchFlight}
+            type="submit"
+          >
+            Search
+          </Button>
+        </Box>
+      </FormControl>
+    </form>
   );
 }
