@@ -64,6 +64,11 @@ export default function SignInSide() {
   //     });
   //   };
 
+  const signin = (e) => {
+    e.preventDefault();
+    router.push("/sign-in");
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -161,7 +166,7 @@ export default function SignInSide() {
                   </Link>
                 </Grid> */}
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="sign-in" variant="body2">
                     {"already have an account? Sign in"}
                   </Link>
                 </Grid>
