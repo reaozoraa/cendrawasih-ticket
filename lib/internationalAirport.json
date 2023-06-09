@@ -1,0 +1,724 @@
+{
+  "countries": [
+    {
+      "name": "United States",
+      "airport": {
+        "name": "Hartsfield-Jackson Atlanta International Airport",
+        "code": "ATL",
+        "location": "Atlanta, Georgia, USA"
+      }
+    },
+    {
+      "name": "China",
+      "airport": {
+        "name": "Beijing Capital International Airport",
+        "code": "PEK",
+        "location": "Beijing, China"
+      }
+    },
+    {
+      "name": "United Kingdom",
+      "airport": {
+        "name": "London Heathrow Airport",
+        "code": "LHR",
+        "location": "London, United Kingdom"
+      }
+    },
+    {
+      "name": "Germany",
+      "airport": {
+        "name": "Frankfurt Airport",
+        "code": "FRA",
+        "location": "Frankfurt, Germany"
+      }
+    },
+    {
+      "name": "France",
+      "airport": {
+        "name": "Paris Charles de Gaulle Airport",
+        "code": "CDG",
+        "location": "Paris, France"
+      }
+    },
+    {
+      "name": "Spain",
+      "airport": {
+        "name": "Adolfo Suárez Madrid–Barajas Airport",
+        "code": "MAD",
+        "location": "Madrid, Spain"
+      }
+    },
+    {
+      "name": "Italy",
+      "airport": {
+        "name": "Leonardo da Vinci–Fiumicino Airport",
+        "code": "FCO",
+        "location": "Rome, Italy"
+      }
+    },
+    {
+      "name": "Brazil",
+      "airport": {
+        "name": "Guarulhos International Airport",
+        "code": "GRU",
+        "location": "Sao Paulo, Brazil"
+      }
+    },
+    {
+      "name": "Australia",
+      "airport": {
+        "name": "Sydney Airport",
+        "code": "SYD",
+        "location": "Sydney, Australia"
+      }
+    },
+    {
+      "name": "Canada",
+      "airport": {
+        "name": "Toronto Pearson International Airport",
+        "code": "YYZ",
+        "location": "Toronto, Canada"
+      }
+    },
+    {
+      "name": "India",
+      "airport": {
+        "name": "Indira Gandhi International Airport",
+        "code": "DEL",
+        "location": "Delhi, India"
+      }
+    },
+    {
+      "name": "Japan",
+      "airport": {
+        "name": "Tokyo Haneda Airport",
+        "code": "HND",
+        "location": "Tokyo, Japan"
+      }
+    },
+    {
+      "name": "Mexico",
+      "airport": {
+        "name": "Mexico City International Airport",
+        "code": "MEX",
+        "location": "Mexico City, Mexico"
+      }
+    },
+    {
+      "name": "South Korea",
+      "airport": {
+        "name": "Incheon International Airport",
+        "code": "ICN",
+        "location": "Seoul, South Korea"
+      }
+    },
+    {
+      "name": "Turkey",
+      "airport": {
+        "name": "Istanbul Atatürk Airport",
+        "code": "IST",
+        "location": "Istanbul, Turkey"
+      }
+    },
+    {
+      "name": "Russia",
+      "airport": {
+        "name": "Sheremetyevo International Airport",
+        "code": "SVO",
+        "location": "Moscow, Russia"
+      }
+    },
+    {
+      "name": "Netherlands",
+      "airport": {
+        "name": "Amsterdam Airport Schiphol",
+        "code": "AMS",
+        "location": "Amsterdam, Netherlands"
+      }
+    },
+    {
+      "name": "Switzerland",
+      "airport": {
+        "name": "Zurich Airport",
+        "code": "ZRH",
+        "location": "Zurich, Switzerland"
+      }
+    },
+    {
+      "name": "Argentina",
+      "airport": {
+        "name": "Ministro Pistarini International Airport",
+        "code": "EZE",
+        "location": "Buenos Aires, Argentina"
+      }
+    },
+    {
+      "name": "Sweden",
+      "airport": {
+        "name": "Stockholm Arlanda Airport",
+        "code": "ARN",
+        "location": "Stockholm, Sweden"
+      }
+    },
+    {
+      "name": "Belgium",
+      "airport": {
+        "name": "Brussels Airport",
+        "code": "BRU",
+        "location": "Brussels, Belgium"
+      }
+    },
+    {
+      "name": "Austria",
+      "airport": {
+        "name": "Vienna International Airport",
+        "code": "VIE",
+        "location": "Vienna, Austria"
+      }
+    },
+    {
+      "name": "Denmark",
+      "airport": {
+        "name": "Copenhagen Airport",
+        "code": "CPH",
+        "location": "Copenhagen, Denmark"
+      }
+    },
+    {
+      "name": "Norway",
+      "airport": {
+        "name": "Oslo Airport, Gardermoen",
+        "code": "OSL",
+        "location": "Oslo, Norway"
+      }
+    },
+    {
+      "name": "Greece",
+      "airport": {
+        "name": "Athens International Airport",
+        "code": "ATH",
+        "location": "Athens, Greece"
+      }
+    },
+    {
+      "name": "Portugal",
+      "airport": {
+        "name": "Lisbon Portela Airport",
+        "code": "LIS",
+        "location": "Lisbon, Portugal"
+      }
+    },
+    {
+      "name": "Finland",
+      "airport": {
+        "name": "Helsinki Airport",
+        "code": "HEL",
+        "location": "Helsinki, Finland"
+      }
+    },
+    {
+      "name": "Saudi Arabia",
+      "airport": {
+        "name": "King Khalid International Airport",
+        "code": "RUH",
+        "location": "Riyadh, Saudi Arabia"
+      }
+    },
+    {
+      "name": "Poland",
+      "airport": {
+        "name": "Warsaw Chopin Airport",
+        "code": "WAW",
+        "location": "Warsaw, Poland"
+      }
+    },
+    {
+      "name": "South Africa",
+      "airport": {
+        "name": "O. R. Tambo International Airport",
+        "code": "JNB",
+        "location": "Johannesburg, South Africa"
+      }
+    },
+    {
+      "name": "Egypt",
+      "airport": {
+        "name": "Cairo International Airport",
+        "code": "CAI",
+        "location": "Cairo, Egypt"
+      }
+    },
+    {
+      "name": "Indonesia",
+      "airport": {
+        "name": "Soekarno–Hatta International Airport",
+        "code": "CGK",
+        "location": "Jakarta, Indonesia"
+      }
+    },
+    {
+      "name": "Colombia",
+      "airport": {
+        "name": "El Dorado International Airport",
+        "code": "BOG",
+        "location": "Bogota, Colombia"
+      }
+    },
+    {
+      "name": "New Zealand",
+      "airport": {
+        "name": "Auckland Airport",
+        "code": "AKL",
+        "location": "Auckland, New Zealand"
+      }
+    },
+    {
+      "name": "Ireland",
+      "airport": {
+        "name": "Dublin Airport",
+        "code": "DUB",
+        "location": "Dublin, Ireland"
+      }
+    },
+    {
+      "name": "Singapore",
+      "airport": {
+        "name": "Singapore Changi Airport",
+        "code": "SIN",
+        "location": "Singapore"
+      }
+    },
+    {
+      "name": "Israel",
+      "airport": {
+        "name": "Ben Gurion Airport",
+        "code": "TLV",
+        "location": "Tel Aviv, Israel"
+      }
+    },
+    {
+      "name": "Czech Republic",
+      "airport": {
+        "name": "Václav Havel Airport Prague",
+        "code": "PRG",
+        "location": "Prague, Czech Republic"
+      }
+    },
+    {
+      "name": "Romania",
+      "airport": {
+        "name": "Henri Coandă International Airport",
+        "code": "OTP",
+        "location": "Bucharest, Romania"
+      }
+    },
+    {
+      "name": "Ukraine",
+      "airport": {
+        "name": "Boryspil International Airport",
+        "code": "KBP",
+        "location": "Kiev, Ukraine"
+      }
+    },
+    {
+      "name": "Malaysia",
+      "airport": {
+        "name": "Kuala Lumpur International Airport",
+        "code": "KUL",
+        "location": "Kuala Lumpur, Malaysia"
+      }
+    },
+    {
+      "name": "Philippines",
+      "airport": {
+        "name": "Ninoy Aquino International Airport",
+        "code": "MNL",
+        "location": "Manila, Philippines"
+      }
+    },
+    {
+      "name": "Hungary",
+      "airport": {
+        "name": "Budapest Ferenc Liszt International Airport",
+        "code": "BUD",
+        "location": "Budapest, Hungary"
+      }
+    },
+    {
+      "name": "Thailand",
+      "airport": {
+        "name": "Suvarnabhumi Airport",
+        "code": "BKK",
+        "location": "Bangkok, Thailand"
+      }
+    },
+    {
+      "name": "Azerbaijan",
+      "airport": {
+        "name": "Heydar Aliyev International Airport",
+        "code": "GYD",
+        "location": "Baku, Azerbaijan"
+      }
+    },
+    {
+      "name": "Chile",
+      "airport": {
+        "name": "Comodoro Arturo Merino Benítez International Airport",
+        "code": "SCL",
+        "location": "Santiago, Chile"
+      }
+    },
+    {
+      "name": "Azerbaijan",
+      "airport": {
+        "name": "Heydar Aliyev International Airport",
+        "code": "GYD",
+        "location": "Baku, Azerbaijan"
+      }
+    },
+    {
+      "name": "Chile",
+      "airport": {
+        "name": "Comodoro Arturo Merino Benítez International Airport",
+        "code": "SCL",
+        "location": "Santiago, Chile"
+      }
+    },
+    {
+      "name": "Bulgaria",
+      "airport": {
+        "name": "Sofia Airport",
+        "code": "SOF",
+        "location": "Sofia, Bulgaria"
+      }
+    },
+    {
+      "name": "Peru",
+      "airport": {
+        "name": "Jorge Chávez International Airport",
+        "code": "LIM",
+        "location": "Lima, Peru"
+      }
+    },
+    {
+      "name": "Vietnam",
+      "airport": {
+        "name": "Tan Son Nhat International Airport",
+        "code": "SGN",
+        "location": "Ho Chi Minh City, Vietnam"
+      }
+    },
+    {
+      "name": "Kazakhstan",
+      "airport": {
+        "name": "Nursultan Nazarbayev International Airport",
+        "code": "NQZ",
+        "location": "Nur-Sultan, Kazakhstan"
+      }
+    },
+    {
+      "name": "Nigeria",
+      "airport": {
+        "name": "Murtala Muhammed International Airport",
+        "code": "LOS",
+        "location": "Lagos, Nigeria"
+      }
+    },
+    {
+      "name": "Kenya",
+      "airport": {
+        "name": "Jomo Kenyatta International Airport",
+        "code": "NBO",
+        "location": "Nairobi, Kenya"
+      }
+    },
+    {
+      "name": "Morocco",
+      "airport": {
+        "name": "Mohammed V International Airport",
+        "code": "CMN",
+        "location": "Casablanca, Morocco"
+      }
+    },
+    {
+      "name": "Tanzania",
+      "airport": {
+        "name": "Julius Nyerere International Airport",
+        "code": "DAR",
+        "location": "Dar es Salaam, Tanzania"
+      }
+    },
+    {
+      "name": "Ethiopia",
+      "airport": {
+        "name": "Addis Ababa Bole International Airport",
+        "code": "ADD",
+        "location": "Addis Ababa, Ethiopia"
+      }
+    },
+    {
+      "name": "Algeria",
+      "airport": {
+        "name": "Houari Boumediene Airport",
+        "code": "ALG",
+        "location": "Algiers, Algeria"
+      }
+    },
+    {
+      "name": "Cameroon",
+      "airport": {
+        "name": "Douala International Airport",
+        "code": "DLA",
+        "location": "Douala, Cameroon"
+      }
+    },
+    {
+      "name": "Uganda",
+      "airport": {
+        "name": "Entebbe International Airport",
+        "code": "EBB",
+        "location": "Entebbe, Uganda"
+      }
+    },
+    {
+      "name": "Myanmar",
+      "airport": {
+        "name": "Yangon International Airport",
+        "code": "RGN",
+        "location": "Yangon, Myanmar"
+      }
+    },
+    {
+      "name": "Ghana",
+      "airport": {
+        "name": "Kotoka International Airport",
+        "code": "ACC",
+        "location": "Accra, Ghana"
+      }
+    },
+    {
+      "name": "Angola",
+      "airport": {
+        "name": "Quatro de Fevereiro International Airport",
+        "code": "LAD",
+        "location": "Luanda, Angola"
+      }
+    },
+    {
+      "name": "Ivory Coast",
+      "airport": {
+        "name": "Félix-Houphouët-Boigny International Airport",
+        "code": "ABJ",
+        "location": "Abidjan, Ivory Coast"
+      }
+    },
+    {
+      "name": "Madagascar",
+      "airport": {
+        "name": "Ivato International Airport",
+        "code": "TNR",
+        "location": "Antananarivo, Madagascar"
+      }
+    },
+    {
+      "name": "Zambia",
+      "airport": {
+        "name": "Kenneth Kaunda International Airport",
+        "code": "LUN",
+        "location": "Lusaka, Zambia"
+      }
+    },
+    {
+      "name": "Tunisia",
+      "airport": {
+        "name": "Tunis-Carthage International Airport",
+        "code": "TUN",
+        "location": "Tunis, Tunisia"
+      }
+    },
+    {
+      "name": "Mali",
+      "airport": {
+        "name": "Bamako-Sénou International Airport",
+        "code": "BKO",
+        "location": "Bamako, Mali"
+      }
+    },
+    {
+      "name": "Senegal",
+      "airport": {
+        "name": "Blaise Diagne International Airport",
+        "code": "DSS",
+        "location": "Dakar, Senegal"
+      }
+    },
+    {
+      "name": "Zimbabwe",
+      "airport": {
+        "name": "Robert Gabriel Mugabe International Airport",
+        "code": "HRE",
+        "location": "Harare, Zimbabwe"
+      }
+    },
+    {
+      "name": "Malawi",
+      "airport": {
+        "name": "Lilongwe International Airport",
+        "code": "LLW",
+        "location": "Lilongwe, Malawi"
+      }
+    },
+    {
+      "name": "Congo (DR)",
+      "airport": {
+        "name": "N'djili Airport",
+        "code": "FIH",
+        "location": "Kinshasa, Democratic Republic of the Congo"
+      }
+    },
+    {
+      "name": "Burkina Faso",
+      "airport": {
+        "name": "Ouagadougou Airport",
+        "code": "OUA",
+        "location": "Ouagadougou, Burkina Faso"
+      }
+    },
+    {
+      "name": "Rwanda",
+      "airport": {
+        "name": "Kigali International Airport",
+        "code": "KGL",
+        "location": "Kigali, Rwanda"
+      }
+    },
+    {
+      "name": "Cameroon",
+      "airport": {
+        "name": "Douala International Airport",
+        "code": "DLA",
+        "location": "Douala, Cameroon"
+      }
+    },
+    {
+      "name": "Uganda",
+      "airport": {
+        "name": "Entebbe International Airport",
+        "code": "EBB",
+        "location": "Entebbe, Uganda"
+      }
+    },
+    {
+      "name": "Myanmar",
+      "airport": {
+        "name": "Yangon International Airport",
+        "code": "RGN",
+        "location": "Yangon, Myanmar"
+      }
+    },
+    {
+      "name": "Ghana",
+      "airport": {
+        "name": "Kotoka International Airport",
+        "code": "ACC",
+        "location": "Accra, Ghana"
+      }
+    },
+    {
+      "name": "Angola",
+      "airport": {
+        "name": "Quatro de Fevereiro International Airport",
+        "code": "LAD",
+        "location": "Luanda, Angola"
+      }
+    },
+    {
+      "name": "Ivory Coast",
+      "airport": {
+        "name": "Félix-Houphouët-Boigny International Airport",
+        "code": "ABJ",
+        "location": "Abidjan, Ivory Coast"
+      }
+    },
+    {
+      "name": "Madagascar",
+      "airport": {
+        "name": "Ivato International Airport",
+        "code": "TNR",
+        "location": "Antananarivo, Madagascar"
+      }
+    },
+    {
+      "name": "Zambia",
+      "airport": {
+        "name": "Kenneth Kaunda International Airport",
+        "code": "LUN",
+        "location": "Lusaka, Zambia"
+      }
+    },
+    {
+      "name": "Tunisia",
+      "airport": {
+        "name": "Tunis-Carthage International Airport",
+        "code": "TUN",
+        "location": "Tunis, Tunisia"
+      }
+    },
+    {
+      "name": "Mali",
+      "airport": {
+        "name": "Bamako-Sénou International Airport",
+        "code": "BKO",
+        "location": "Bamako, Mali"
+      }
+    },
+    {
+      "name": "Senegal",
+      "airport": {
+        "name": "Blaise Diagne International Airport",
+        "code": "DSS",
+        "location": "Dakar, Senegal"
+      }
+    },
+    {
+      "name": "Zimbabwe",
+      "airport": {
+        "name": "Robert Gabriel Mugabe International Airport",
+        "code": "HRE",
+        "location": "Harare, Zimbabwe"
+      }
+    },
+    {
+      "name": "Malawi",
+      "airport": {
+        "name": "Lilongwe International Airport",
+        "code": "LLW",
+        "location": "Lilongwe, Malawi"
+      }
+    },
+    {
+      "name": "Congo (DR)",
+      "airport": {
+        "name": "N'djili Airport",
+        "code": "FIH",
+        "location": "Kinshasa, Democratic Republic of the Congo"
+      }
+    },
+    {
+      "name": "Burkina Faso",
+      "airport": {
+        "name": "Ouagadougou Airport",
+        "code": "OUA",
+        "location": "Ouagadougou, Burkina Faso"
+      }
+    },
+    {
+      "name": "Rwanda",
+      "airport": {
+        "name": "Kigali International Airport",
+        "code": "KGL",
+        "location": "Kigali, Rwanda"
+      }
+    }
+  ]
+}

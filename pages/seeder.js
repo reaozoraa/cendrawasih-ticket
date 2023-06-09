@@ -1,3 +1,20 @@
+import pb, { newPb } from "@/lib/pocketbase";
+import { useState } from "react";
+import { useEffect } from "react";
+import dayjs from "dayjs";
+
+const Seeder = () => {
+  const text = "Tue, 06 Jun 2023 17:27:51 GMT";
+  useEffect(() => {
+    const newDate = dayjs(text);
+    console.log(newDate);
+  }, []);
+
+  return <div>test</div>;
+};
+
+export default Seeder;
+
 // import pb, { newPb } from "@/lib/pocketbase";
 // import { useState } from "react";
 // import { useEffect } from "react";

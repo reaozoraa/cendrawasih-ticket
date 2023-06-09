@@ -70,7 +70,8 @@ export default function Layout({ children }) {
         maxWidth="auto"
         sx={{
           backgroundColor: "white",
-          height: "100%",
+          height: "auto",
+          // pb: "10px",
           // position: "",
           color: "black",
         }}

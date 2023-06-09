@@ -33,6 +33,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 // import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import dayjs from "dayjs";
+import toObject from "dayjs/plugin/toObject";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateField } from "@mui/x-date-pickers/DateField";
@@ -40,6 +41,8 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useAmp } from "next/amp";
 import pb from "@/lib/pocketbase";
 import { Tomorrow } from "next/font/google";
+
+dayjs.extend(toObject);
 
 const seats = [
   {
@@ -138,12 +141,17 @@ export default function FlightSearch() {
       return;
     }
     setErrorMessage(null);
+
+    const dateObject = dateValue.toObject();
+    const dateToString = `${dateObject.months + 1}-${dateObject.date}-${
+      dateObject.years
+    }`;
     router.push({
       pathname: "/search-result/flight-result",
       query: {
         fp: fromPlace,
         tp: toPlace,
-        dt: `${dateValue}`,
+        dt: dateToString,
         ps: num,
         st: seat,
       },

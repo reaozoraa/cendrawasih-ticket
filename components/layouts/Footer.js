@@ -110,7 +110,7 @@ export default function Footer() {
             className=""
           >
             <Typography variant="caption" color="white">
-              Copyright ©2022. Cendrawasih Limited
+              Copyright ©2022. Cendrawasih
             </Typography>
           </Box>
         </Container>
