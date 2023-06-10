@@ -136,7 +136,7 @@ export default function FlightSearch() {
       parseInt(num),
       seat,
     ];
-    if (validator(flightInputs)) {
+    if (validator(flightInputs) || dateError) {
       setErrorMessage("*please fill up the form with the right value");
       return;
     }

@@ -51,22 +51,55 @@ import Layout from "./layout";
 import Image from "next/image";
 import countries from "@/lib/countries";
 
-export default function FlightResult() {
+export function getServerSideProps(ctx) {
+  const { fpl, tpl, dtd, dta, ps, st, air } = ctx.query;
+  if (!fpl || !tpl || !dtd || !dta || !ps || !st || !air) {
+    // return {
+    //   redirect: {
+    //     destination: "/",
+    //   },
+    // };
+    return {
+      notFound: true,
+    };
+  }
+  return {
+    props: {
+      fpl,
+      tpl,
+      dtd,
+      dta,
+      ps,
+      st,
+      air,
+    },
+  };
+}
+
+export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air }) {
   const router = useRouter();
-  const [phone, setPhone] = useState("+62");
   const [gender, setGender] = useState("male");
   const [dateValue, setDate] = useState(dayjs());
   const [dateValueExpire, setDateExpire] = useState(dayjs());
   const [dateError, setDateError] = useState(null);
   // const [num, setNum] = useState(null);
+
+  // MANUAL
+  const [phone, setPhone] = useState(null);
+  const [citizen, setCitizen] = useState();
+  const [issuing, setIssuing] = useState();
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
-
+  const watchAllFields = watch();
   const onSubmit = (data) => {
+    data.phone = phone;
+    data.citizenship = citizen;
+    data.issuingCountry = issuing;
     console.log(data);
   };
 
@@ -101,7 +134,7 @@ export default function FlightResult() {
                 required
                 id=""
                 defaultValue=""
-                {...register("testOne")}
+                {...register("dp-firstname")}
               />
             </Box>
             <Box sx={{ width: 300 }} className="label-box">
@@ -112,7 +145,7 @@ export default function FlightResult() {
                 required
                 id=""
                 defaultValue=""
-                {...register("testTwo")}
+                {...register("dp-lastname")}
               />
             </Box>
           </Box>
@@ -129,7 +162,8 @@ export default function FlightResult() {
                 defaultCountry={"id"}
                 // excludeCountries={[]}
                 onChange={handleOnChange}
-                Width={500}
+                width={500}
+                // {...register("dp-noHP")}
               />
               {/* <PhoneInput
                 placeholder="Enter phone number"
@@ -152,7 +186,7 @@ export default function FlightResult() {
                 required
                 id=""
                 defaultValue=""
-                {...register("testFour")}
+                {...register("dp-email")}
               />
             </Box>
           </Box>
@@ -228,6 +262,7 @@ export default function FlightResult() {
                   defaultValue={gender}
                   label="Gender"
                   onChange={handleGender}
+                  {...register("psp-gender")}
                 >
                   <MenuItem value="male">Male</MenuItem>
                   <MenuItem value="female">Female</MenuItem>
@@ -247,7 +282,7 @@ export default function FlightResult() {
                     id=""
                     defaultValue=""
                     sx={{ width: "100%" }}
-                    {...register("testFive")}
+                    {...register("psp-firstname")}
                   />
                 </Box>
                 <Box sx={{ width: 300 }} className="label-box">
@@ -259,7 +294,7 @@ export default function FlightResult() {
                     id=""
                     defaultValue=""
                     sx={{ width: "100%" }}
-                    {...register("testSix")}
+                    {...register("psp-lastname")}
                   />
                 </Box>
               </Box>
@@ -275,17 +310,21 @@ export default function FlightResult() {
                       maxDate={maxDate}
                       value={dateValue}
                       onChange={(newValue) => setDate(newValue)}
+                      {...register("psp-date")}
                     />
                   </LocalizationProvider>
                 </Box>
                 <Box sx={{ width: 300 }} className="label-box">
                   <Typography variant="p">Kewarganegaraan</Typography>
                   <Autocomplete
+                    required
                     id="country-select-demo"
                     sx={{ width: 300 }}
                     options={countries}
                     autoHighlight
                     getOptionLabel={(option) => option.label}
+                    // {...register("psp-citizenship")}
+                    onChange={(event, value) => setCitizen(value.label)}
                     renderOption={(props, option) => (
                       <Box
                         component="li"
@@ -341,17 +380,21 @@ export default function FlightResult() {
                     required
                     id=""
                     defaultValue=""
+                    {...register("psp-no-passport")}
                     inputProps={{ style: { textTransform: "uppercase" } }}
                   />
                 </Box>
                 <Box sx={{ width: 300 }} className="label-box">
                   <Typography variant="p">Negara Penerbit</Typography>
                   <Autocomplete
+                    required
                     id="country-select-demo"
                     sx={{ width: 300 }}
                     options={countries}
                     autoHighlight
                     getOptionLabel={(option) => option.label}
+                    // {...register("psp-issuing-country")}
+                    onChange={(event, value) => setIssuing(value.label)}
                     renderOption={(props, option) => (
                       <Box
                         component="li"
@@ -388,6 +431,7 @@ export default function FlightResult() {
                     // label="Tanggal Pergi"
                     minDate={minDate}
                     value={dateValueExpire}
+                    {...register("psp-expire")}
                     onChange={(newValue) => setDateExpire(newValue)}
                   />
                 </LocalizationProvider>

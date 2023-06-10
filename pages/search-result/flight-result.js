@@ -51,10 +51,32 @@ const buttonTheme = createTheme({
   },
 });
 
-export default function FlightResult() {
+export function getServerSideProps(ctx) {
+  const { fp, tp, dt, ps, st } = ctx.query;
+  if (!fp || !tp || !dt || !ps || !st) {
+    // return {
+    //   redirect: {
+    //     destination: "/",
+    //   },
+    // };
+    return {
+      notFound: true,
+    };
+  }
+  return {
+    props: {
+      fp,
+      tp,
+      dt,
+      ps,
+      st,
+    },
+  };
+}
+
+export default function FlightResult({ fp, tp, dt, ps, st }) {
   const [flights, setFlights] = useState([]);
   const router = useRouter();
-  const { fp, tp, dt, ps, st } = router.query;
 
   const handleBookingChoice = (e, leFlight) => {
     e.preventDefault();
@@ -65,9 +87,11 @@ export default function FlightResult() {
         query: {
           fpl: leFlight.origin.id,
           tpl: leFlight.destination.id,
-          dt: dateToString,
+          dtd: leFlight.depart.toString(),
+          dta: leFlight.arrive.toString(),
           ps: ps,
           st: st,
+          air: leFlight.airline.id,
         },
       });
     } else {
@@ -79,15 +103,6 @@ export default function FlightResult() {
   };
 
   // const [airlines, setAirlines] = useState([]);
-  var options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-  };
-
   async function getFlightResult() {
     // const datas = seeder(fp, tp, dt, ps, st);
     // console.log(dt);
