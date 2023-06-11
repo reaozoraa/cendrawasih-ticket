@@ -52,8 +52,8 @@ const buttonTheme = createTheme({
 });
 
 export function getServerSideProps(ctx) {
-  const { fp, tp, dt, ps, st } = ctx.query;
-  if (!fp || !tp || !dt || !ps || !st) {
+  const { fp, tp, dt, ps, st, tk } = ctx.query;
+  if (!fp || !tp || !dt || !ps || !st || !tk) {
     // return {
     //   redirect: {
     //     destination: "/",
@@ -70,11 +70,12 @@ export function getServerSideProps(ctx) {
       dt,
       ps,
       st,
+      tk,
     },
   };
 }
 
-export default function FlightResult({ fp, tp, dt, ps, st }) {
+export default function FlightResult({ fp, tp, dt, ps, st, tk }) {
   const [flights, setFlights] = useState([]);
   const router = useRouter();
 
@@ -92,6 +93,7 @@ export default function FlightResult({ fp, tp, dt, ps, st }) {
           ps: ps,
           st: st,
           air: leFlight.airline.id,
+          tk: tk,
         },
       });
     } else {
@@ -144,83 +146,84 @@ export default function FlightResult({ fp, tp, dt, ps, st }) {
       </div> */}
 
       <Box>
-        {flights ? (
-          flights.map((flight) => (
-            <Card sx={{ minWidth: 275, my: "10px" }} key={flight.id}>
-              <CardHeader title={flight.airline.name} subheader={st} />
-              <Box sx={{ mx: "10px" }} className="flex flex-wrap items-start ">
-                <Box
-                  sx={{ minWidth: "600px", pb: "20px" }}
-                  className="flex grow items-center justify-between"
-                >
-                  <Box className="text-center">
-                    <Typography variant="p">
-                      {flight.origin.airport_name}({flight.origin.airport_code})
-                    </Typography>
-                    <Typography variant="h6">
-                      {flight.origin.airport_location}
-                    </Typography>
-                    <Typography variant="p">
-                      {/* {new Date(flight.departure).toLocaleDateString(
-                          "id-ID",
-                          options
-                        )} */}
-                      {flight.depart.toString()}
-                    </Typography>
-                  </Box>
-                  <TrendingFlatIcon
-                    sx={{ fontSize: "50px" }}
-                    className="text-blue-500"
-                  />
-                  <Box className="text-center">
-                    <Typography variant="p">
-                      {flight.destination.airport_name}(
-                      {flight.destination.airport_code})
-                    </Typography>
-                    <Typography variant="h6">
-                      {flight.destination.airport_location}
-                    </Typography>
-                    <Typography variant="p">
-                      {/* {new Date(flight.arrival).toLocaleDateString(
-                          "id-ID",
-                          options
-                        )} */}
-                      {flight.arrive.toString()}
-                    </Typography>
-                  </Box>
-                </Box>
-                <Box sx={{ ml: "5%", pb: "20px" }}>
-                  <ThemeProvider theme={buttonTheme}>
-                    <Box sx={{ maxWidth: "200px" }} className="text-right">
-                      <Typography wrap variant="p">
-                        <span className="text-orange-600">
-                          {moneyFormatter(flight.price, "IDR", "in-ID")}
-                        </span>
-                        /org
+        {flights
+          ? flights.map((flight) => (
+              <Card sx={{ minWidth: 275, my: "10px" }} key={flight.id}>
+                <CardHeader title={flight.airline.name} subheader={st} />
+                <Box sx={{ mx: "10px" }} className="flex flex items-start ">
+                  <Box
+                    sx={{ minWidth: "600px", pb: "20px" }}
+                    className="flex grow items-center justify-between"
+                  >
+                    <Box className="text-center">
+                      <Typography variant="p">
+                        {flight.origin.airport_name}(
+                        {flight.origin.airport_code})
                       </Typography>
-                      <Button
-                        variant="contained"
-                        className="bg-orange-500 text-white"
-                        sx={{ width: "200px" }}
-                        // onClick={() =>
-                        //   pb.authStore.isValid
-                        //     ? router.push("/tiket")
-                        //     : router.push("/sign-in")
-                        // }
-                        onClick={(e) => handleBookingChoice(e, flight)}
-                      >
-                        Pilih
-                      </Button>
+                      <Typography variant="h6">
+                        {flight.origin.airport_location}
+                      </Typography>
+                      <Typography variant="p">
+                        {/* {new Date(flight.departure).toLocaleDateString(
+                          "id-ID",
+                          options
+                        )} */}
+                        {flight.depart.toString()}
+                      </Typography>
                     </Box>
-                  </ThemeProvider>
+                    <TrendingFlatIcon
+                      sx={{ fontSize: "50px" }}
+                      className="text-blue-500"
+                    />
+                    <Box className="text-center">
+                      <Typography variant="p">
+                        {flight.destination.airport_name}(
+                        {flight.destination.airport_code})
+                      </Typography>
+                      <Typography variant="h6">
+                        {flight.destination.airport_location}
+                      </Typography>
+                      <Typography variant="p">
+                        {/* {new Date(flight.arrival).toLocaleDateString(
+                          "id-ID",
+                          options
+                        )} */}
+                        {flight.arrive.toString()}
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Box sx={{ ml: "5%", pb: "20px" }}>
+                    <ThemeProvider theme={buttonTheme}>
+                      <Box sx={{ maxWidth: "200px" }} className="text-right">
+                        <Typography wrap variant="p">
+                          <span className="text-orange-600">
+                            {moneyFormatter(flight.price, "IDR", "in-ID")}
+                          </span>
+                          /org
+                        </Typography>
+                        <Button
+                          variant="contained"
+                          className="bg-orange-500 text-white"
+                          sx={{ width: "200px" }}
+                          // onClick={() =>
+                          //   pb.authStore.isValid
+                          //     ? router.push("/tiket")
+                          //     : router.push("/sign-in")
+                          // }
+                          onClick={(e) => handleBookingChoice(e, flight)}
+                        >
+                          Pilih
+                        </Button>
+                      </Box>
+                    </ThemeProvider>
+                  </Box>
                 </Box>
-              </Box>
-              {/* <CardContent></CardContent> */}
-            </Card>
-          ))
-        ) : (
-          <Box sx={{ paddingBottom: "100px" }}></Box>
-        )}
+                {/* <CardContent></CardContent> */}
+              </Card>
+            ))
+          : null}
+
+        <Box sx={{ height: "100px" }}></Box>
       </Box>
     </Layout>
   );

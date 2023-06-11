@@ -52,8 +52,8 @@ import Image from "next/image";
 import countries from "@/lib/countries";
 
 export function getServerSideProps(ctx) {
-  const { fpl, tpl, dtd, dta, ps, st, air } = ctx.query;
-  if (!fpl || !tpl || !dtd || !dta || !ps || !st || !air) {
+  const { fpl, tpl, dtd, dta, ps, st, air, tk } = ctx.query;
+  if (!fpl || !tpl || !dtd || !dta || !ps || !st || !air || !tk) {
     // return {
     //   redirect: {
     //     destination: "/",
@@ -72,16 +72,18 @@ export function getServerSideProps(ctx) {
       ps,
       st,
       air,
+      tk,
     },
   };
 }
 
-export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air }) {
+export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air, tk }) {
   const router = useRouter();
   const [gender, setGender] = useState("male");
   const [dateValue, setDate] = useState(dayjs());
   const [dateValueExpire, setDateExpire] = useState(dayjs());
   const [dateError, setDateError] = useState(null);
+  const [phoneErr, setPhoneErr] = useState(null);
   // const [num, setNum] = useState(null);
 
   // MANUAL
@@ -96,11 +98,43 @@ export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air }) {
     formState: { errors },
   } = useForm();
   const watchAllFields = watch();
+
   const onSubmit = (data) => {
-    data.phone = phone;
+    if (!phone || phone.length <= 6 || phone.length >= 15) {
+      setPhoneErr("Invalid phone number input");
+      return;
+    }
+    setPhoneErr(null);
+    const spacelessPhone = phone.replace(/\s+/g, "");
+    data.phone = spacelessPhone;
     data.citizenship = citizen;
     data.issuingCountry = issuing;
-    console.log(data);
+    // console.log(data);
+    router.push({
+      pathname: "../booking/flight-payment",
+      query: {
+        ctz: data.citizenship,
+        dpE: data.dpEmail,
+        dpFn: data.dpFirstname,
+        dpLn: data.dpLastname,
+        issC: data.issuingCountry,
+        pn: data.phone,
+        pspD: data.pspDate,
+        pspExp: data.pspExpire,
+        pspFn: data.pspFirstname,
+        pspG: data.pspGender,
+        pspLn: data.pspLastname,
+        pspPp: data.pspPassport,
+        fpl: fpl,
+        tpl: tpl,
+        dtd: dtd,
+        dta: dta,
+        ps: ps,
+        st: st,
+        air: air,
+        tk: tk,
+      },
+    });
   };
 
   const minDate = dayjs();
@@ -115,7 +149,7 @@ export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air }) {
   }
 
   return (
-    <Layout>
+    <Layout stage={0}>
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* FIRST CARD */}
         <Typography variant="h5">Data Pemesan</Typography>
@@ -132,9 +166,10 @@ export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air }) {
               </Typography>
               <TextField
                 required
+                // {errors.mail ? "true" : "false"}
                 id=""
                 defaultValue=""
-                {...register("dp-firstname")}
+                {...register("dpFirstname", { required: true, maxLength: 20 })}
               />
             </Box>
             <Box sx={{ width: 300 }} className="label-box">
@@ -145,7 +180,7 @@ export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air }) {
                 required
                 id=""
                 defaultValue=""
-                {...register("dp-lastname")}
+                {...register("dpLastname", { required: true, maxLength: 20 })}
               />
             </Box>
           </Box>
@@ -158,11 +193,13 @@ export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air }) {
             <Box sx={{ width: 300 }} className="label-box">
               <Typography variant="h6">No. Handphone</Typography>
               <MuiPhoneNumber
+                // id="phoneNum"
                 variant="outlined"
                 defaultCountry={"id"}
                 // excludeCountries={[]}
                 onChange={handleOnChange}
                 width={500}
+                // error={phone ? true : false}
                 // {...register("dp-noHP")}
               />
               {/* <PhoneInput
@@ -186,7 +223,17 @@ export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air }) {
                 required
                 id=""
                 defaultValue=""
-                {...register("dp-email")}
+                {...register("dpEmail", {
+                  required: "Email is required",
+                  validate: {
+                    maxLength: (v) =>
+                      v.length <= 50 ||
+                      "The email should have at most 50 characters",
+                    matchPattern: (v) =>
+                      /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+                      "Email address must be a valid address",
+                  },
+                })}
               />
             </Box>
           </Box>
@@ -198,7 +245,7 @@ export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air }) {
           <Typography variant="h5">Detail Traveler</Typography>
           <Card sx={{ maxWidth: 800, m: "10px", paddingBottom: "20px" }}>
             <CardHeader
-              title="Dewasa"
+              title="Data penumpang"
               // subheader=""
               className=""
             />
@@ -262,7 +309,7 @@ export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air }) {
                   defaultValue={gender}
                   label="Gender"
                   onChange={handleGender}
-                  {...register("psp-gender")}
+                  {...register("pspGender")}
                 >
                   <MenuItem value="male">Male</MenuItem>
                   <MenuItem value="female">Female</MenuItem>
@@ -282,7 +329,10 @@ export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air }) {
                     id=""
                     defaultValue=""
                     sx={{ width: "100%" }}
-                    {...register("psp-firstname")}
+                    {...register("pspFirstname", {
+                      required: true,
+                      maxLength: 20,
+                    })}
                   />
                 </Box>
                 <Box sx={{ width: 300 }} className="label-box">
@@ -294,7 +344,10 @@ export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air }) {
                     id=""
                     defaultValue=""
                     sx={{ width: "100%" }}
-                    {...register("psp-lastname")}
+                    {...register("pspLastname", {
+                      required: true,
+                      maxLength: 20,
+                    })}
                   />
                 </Box>
               </Box>
@@ -310,7 +363,7 @@ export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air }) {
                       maxDate={maxDate}
                       value={dateValue}
                       onChange={(newValue) => setDate(newValue)}
-                      {...register("psp-date")}
+                      {...register("pspDate")}
                     />
                   </LocalizationProvider>
                 </Box>
@@ -380,7 +433,10 @@ export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air }) {
                     required
                     id=""
                     defaultValue=""
-                    {...register("psp-no-passport")}
+                    {...register("pspPassport", {
+                      required: true,
+                      maxLength: 20,
+                    })}
                     inputProps={{ style: { textTransform: "uppercase" } }}
                   />
                 </Box>
@@ -429,14 +485,19 @@ export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air }) {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     // label="Tanggal Pergi"
-                    minDate={minDate}
+                    // minDate={minDate}
                     value={dateValueExpire}
-                    {...register("psp-expire")}
+                    {...register("pspExpire")}
                     onChange={(newValue) => setDateExpire(newValue)}
                   />
                 </LocalizationProvider>
               </Box>
             </Box>
+            {phoneErr ? (
+              <Typography variant="h6" color="red" sx={{ m: 2 }}>
+                {phoneErr}
+              </Typography>
+            ) : null}
           </Card>
           {/* <input type="submit" /> */}
           <Button variant="contained" className="bg-blue-500 m-2" type="submit">

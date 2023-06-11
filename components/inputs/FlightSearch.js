@@ -41,6 +41,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useAmp } from "next/amp";
 import pb from "@/lib/pocketbase";
 import { Tomorrow } from "next/font/google";
+import { randomBytes } from "crypto";
 
 dayjs.extend(toObject);
 
@@ -128,6 +129,7 @@ export default function FlightSearch() {
 
   const handleSearchFlight = (e) => {
     e.preventDefault();
+    const token = randomBytes(32).toString("hex");
     // router.push(`/search-result/flight-result?fp=${fromPlace}&tp=${toPlace}&dt=${dateValue}&ps=${num}&st=${seat}`);
     const flightInputs = [
       fromPlace,
@@ -146,6 +148,7 @@ export default function FlightSearch() {
     const dateToString = `${dateObject.months + 1}-${dateObject.date}-${
       dateObject.years
     }`;
+
     router.push({
       pathname: "/search-result/flight-result",
       query: {
@@ -154,13 +157,14 @@ export default function FlightSearch() {
         dt: dateToString,
         ps: num,
         st: seat,
+        tk: token,
       },
     });
   };
 
-  useEffect(() => {
-    console.log(fromPlace, toPlace);
-  }, [dateError, fromPlace, toPlace]);
+  // useEffect(() => {
+  //   console.log(fromPlace, toPlace);
+  // }, [dateError, fromPlace, toPlace]);
 
   return (
     <form onSubmit={(e) => handleSearchFlight(e)}>

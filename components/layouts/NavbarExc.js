@@ -5,6 +5,7 @@ import {
   Box,
   Toolbar,
   CssBaseline,
+  createTheme,
   IconButton,
   Typography,
   Menu,
@@ -18,6 +19,7 @@ import {
   CardContent,
   Tabs,
   Tab,
+  ThemeProvider,
   Stepper,
   Step,
   StepLabel,
@@ -32,6 +34,17 @@ import Link from "next/link";
 
 const steps = ["pesan", "bayar", "E-ticket"];
 
+const theme = createTheme({
+  breakpoints: {
+    values: {
+      mobile: 0,
+      tablet: 640,
+      laptop: 1024,
+      desktop: 1200,
+    },
+  },
+});
+
 const bull = (
   <Box
     component="span"
@@ -41,7 +54,7 @@ const bull = (
   </Box>
 );
 
-export default function NavbarExc() {
+export default function NavbarExc({ stage }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -60,43 +73,45 @@ export default function NavbarExc() {
     setAnchorElUser(null);
   };
   return (
-    <AppBar
-      position="static"
-      sx={{ backgroundColor: "white", color: "black" }}
-      className="shadow-xl border-b"
-    >
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <Image
-              src="/brand/title.png"
-              alt="the logo"
-              width={230}
-              height={230}
-            />
-          </Box>
+    <ThemeProvider theme={theme}>
+      <AppBar
+        position="static"
+        sx={{ backgroundColor: "white", color: "black" }}
+        className="shadow-xl border-b"
+      >
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <Box sx={{ display: { mobile: "none", tablet: "flex" } }}>
+              <Image
+                src="/brand/title.png"
+                alt="the logo"
+                width={230}
+                height={230}
+              />
+            </Box>
 
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <Image
-              src="/brand/logoonly.png"
-              alt="the logo"
-              width={50}
-              height={50}
-            />
-          </Box>
+            <Box sx={{ display: { mobile: "flex", tablet: "none" } }}>
+              <Image
+                src="/brand/logoonly.png"
+                alt="the logo"
+                width={50}
+                height={50}
+              />
+            </Box>
 
-          <Box sx={{ flexGrow: 1 }} className=""></Box>
-          <Box sx={{ flexGrow: 0 }} className="">
-            <Stepper nonLinear>
-              {steps.map((label) => (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+            <Box sx={{ flexGrow: 1 }} className=""></Box>
+            <Box sx={{ flexGrow: 0 }} className="">
+              <Stepper nonLinear activeStep={stage}>
+                {steps.map((label) => (
+                  <Step key={label}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                ))}
+              </Stepper>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+    </ThemeProvider>
   );
 }

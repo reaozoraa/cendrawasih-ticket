@@ -107,7 +107,7 @@ async function seeder(fp, tp, dt, ps, st) {
     }
     return generatedDatas;
   } catch (error) {
-    return error;
+    return false;
   }
 }
 

@@ -26,11 +26,11 @@ import NavbarExc from "@/components/layouts/NavbarExc";
 
 import style from "../../styles/Home.module.css";
 
-export default function Layout({ children }) {
+export default function Layout({ children, stage }) {
   return (
     <main className={style.main}>
       <CssBaseline />
-      <NavbarExc />
+      <NavbarExc stage={stage} />
       <Container
         maxWidth="auto"
         sx={{
