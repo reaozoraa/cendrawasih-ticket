@@ -32,6 +32,7 @@ import FlightSearch from "../components/inputs/FlightSearch";
 import HotelSearch from "../components/inputs/HotelSearch";
 import { Questrial } from "next/font/google";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 
 const questrial = Questrial({
   subsets: ["latin"],

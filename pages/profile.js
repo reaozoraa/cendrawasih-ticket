@@ -19,5 +19,7 @@ import {
 } from "@mui/material/";
 
 export default function profile() {
-  return <></>;
+  return <>
+  <Navbar/>
+  </>;
 }

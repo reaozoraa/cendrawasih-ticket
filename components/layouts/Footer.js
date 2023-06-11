@@ -32,7 +32,7 @@ export default function Footer() {
         sx={{
           width: "100%",
           position: "relative",
-          top: "100%",
+          // top: "100%",
           zIndex: "999",
         }}
         component="footer"
@@ -109,8 +109,8 @@ export default function Footer() {
             }}
             className=""
           >
-            <Typography variant="caption" color="initial">
-              Copyright ©2022. [] Limited
+            <Typography variant="caption" color="white">
+              Copyright ©2022. Cendrawasih
             </Typography>
           </Box>
         </Container>
