@@ -1,39 +1,22 @@
-import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 import {
-  AppBar,
   Box,
-  Toolbar,
-  CssBaseline,
-  IconButton,
-  Typography,
-  Menu,
-  Container,
-  Avatar,
   Button,
-  Tooltip,
-  MenuItem,
   Card,
-  CardActions,
-  CardContent,
-  Tabs,
-  Tab,
-  ThemeProvider,
-  createTheme,
   CardHeader,
+  ThemeProvider,
+  Typography,
+  createTheme,
 } from "@mui/material/";
 
-import Footer from "../../components/layouts/Footer";
-import Navbar from "../../components/layouts/Navbar";
 import Layout from "./layout";
 
-import style from "../../styles/Home.module.css";
-import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
 import pb from "@/lib/pocketbase";
-import seeder from "@/utils/seeder";
 import moneyFormatter from "@/utils/moneyFormatter";
-import dayjs from "dayjs";
+import seeder from "@/utils/seeder";
+import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
 
 const buttonTheme = createTheme({
   status: {
@@ -150,7 +133,10 @@ export default function FlightResult({ fp, tp, dt, ps, st, tk }) {
           ? flights.map((flight) => (
               <Card sx={{ minWidth: 275, my: "10px" }} key={flight.id}>
                 <CardHeader title={flight.airline.name} subheader={st} />
-                <Box sx={{ mx: "10px" }} className="flex flex items-start ">
+                <Box
+                  sx={{ mx: "10px" }}
+                  className="flex flex-wrap items-start "
+                >
                   <Box
                     sx={{ minWidth: "600px", pb: "20px" }}
                     className="flex grow items-center justify-between"

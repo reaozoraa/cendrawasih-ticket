@@ -1,29 +1,9 @@
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  CssBaseline,
-  IconButton,
-  Typography,
-  Menu,
-  Container,
-  Avatar,
-  Button,
-  Tooltip,
-  MenuItem,
-  Card,
-  CardActions,
-  CardContent,
-  Tabs,
-  Tab,
-  Paper,
-} from "@mui/material/";
+import { Box, Container, Paper, Typography } from "@mui/material/";
 import Link from "next/link";
-import { styled } from "@mui/material/styles";
 
-import TwitterIcon from "@mui/icons-material/Twitter";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import TwitterIcon from "@mui/icons-material/Twitter";
 
 export default function Footer() {
   return (

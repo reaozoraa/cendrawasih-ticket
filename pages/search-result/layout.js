@@ -1,35 +1,9 @@
-import * as React from "react";
-import { useState } from "react";
-import { useRouter } from "next/router";
-
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  CssBaseline,
-  IconButton,
-  Typography,
-  Menu,
-  Container,
-  Avatar,
-  Button,
-  Tooltip,
-  MenuItem,
-  Card,
-  CardActions,
-  CardContent,
-  Tabs,
-  Tab,
-  ThemeProvider,
-  createTheme,
-  CardHeader,
-} from "@mui/material/";
+import { Container, CssBaseline, createTheme } from "@mui/material/";
 
 import Footer from "../../components/layouts/Footer";
 import Navbar from "../../components/layouts/Navbar";
 
 import style from "../../styles/Home.module.css";
-import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
 
 const buttonTheme = createTheme({
   status: {

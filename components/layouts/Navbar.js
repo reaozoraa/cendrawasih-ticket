@@ -1,34 +1,25 @@
-import * as React from "react";
 import { useRouter } from "next/router";
+import * as React from "react";
 
 import {
   AppBar,
-  Box,
-  Toolbar,
-  CssBaseline,
-  createTheme,
-  IconButton,
-  Typography,
-  Menu,
-  Container,
   Avatar,
+  Box,
   Button,
-  Tooltip,
+  Container,
+  IconButton,
+  Menu,
   MenuItem,
-  Card,
-  CardActions,
-  CardContent,
-  Tabs,
-  Tab,
   ThemeProvider,
+  Toolbar,
+  Tooltip,
+  Typography,
+  createTheme,
 } from "@mui/material/";
 
-import MenuIcon from "@mui/icons-material/Menu";
-import AdbIcon from "@mui/icons-material/Adb";
-import { BookmarkBorder, Route } from "@mui/icons-material";
-import Image from "next/image";
-import Link from "next/link";
 import pb from "@/lib/pocketbase";
+import { BookmarkBorder } from "@mui/icons-material";
+import Image from "next/image";
 // import logo from '../public/brand/logo.png';
 import useLogout from "@/hooks/useLogout";
 import dynamic from "next/dynamic";
@@ -97,43 +88,6 @@ function Navbar() {
       >
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            {/* <Box sx={{ flexGrow: 0, display: { mobile: 'flex', tablet: 'none' } }}>
-            <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenNavMenu}
-                color="inherit"
-            >
-                <MenuIcon />
-            </IconButton>
-            <Menu
-            id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-                }}
-                keepMounted
-                transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{
-                display: { mobile: 'block', tablet: 'none' },
-              }}
-            >
-                {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-                ))}
-            </Menu>
-            </Box> */}
-
             <Box sx={{ display: { mobile: "none", tablet: "flex" } }}>
               <Image
                 src="/brand/title.png"
@@ -157,19 +111,20 @@ function Navbar() {
               sx={{ flexGrow: 1, display: { mobile: "none", tablet: "flex" } }}
               className="flex justify-end"
             >
-              {pages.map((page) => (
-                <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "inherit", display: "block" }}
-                  className="flex items-center"
-                >
-                  <BookmarkBorder />
-                  <Typography variant="p" sx={{ display: "inline" }}>
-                    {page}
-                  </Typography>
-                </Button>
-              ))}
+              <Button
+                // onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: "inherit", display: "block" }}
+                className="flex items-center"
+                onClick={() => {
+                  handleCloseNavMenu();
+                  router.push("/bookmarks");
+                }}
+              >
+                <BookmarkBorder />
+                <Typography variant="p" sx={{ display: "inline" }}>
+                  Saved
+                </Typography>
+              </Button>
             </Box>
 
             {/* UNAUTHENTICATED */}

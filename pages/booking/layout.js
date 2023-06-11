@@ -1,25 +1,4 @@
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  CssBaseline,
-  IconButton,
-  Typography,
-  Menu,
-  Container,
-  Avatar,
-  Button,
-  Tooltip,
-  MenuItem,
-  Card,
-  CardActions,
-  CardContent,
-  Tabs,
-  Tab,
-  ThemeProvider,
-  createTheme,
-  CardHeader,
-} from "@mui/material/";
+import { Container, CssBaseline } from "@mui/material/";
 
 import Footer from "@/components/layouts/Footer";
 import NavbarExc from "@/components/layouts/NavbarExc";
