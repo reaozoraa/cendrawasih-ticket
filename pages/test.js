@@ -11,4 +11,4 @@ const test = () => {
   );
 };
 
-export default test();
+export default test;
