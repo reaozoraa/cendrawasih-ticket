@@ -1,5 +1,8 @@
 import React from "react";
-import Layout from "./layout";
+import Layout from "./../layout";
+import { useEffect } from "react";
+
+import pb from "@/lib/pocketbase";
 
 import {
   Box,
@@ -12,7 +15,18 @@ import {
   FormLabel,
 } from "@mui/material/";
 
-function bookmarks() {
+function Tickets() {
+  useEffect(() => {
+    if (!pb.authStore.isValid) {
+      console.log("heck");
+      return {
+        redirect: {
+          destination: "/",
+        },
+      };
+    }
+  });
+
   return (
     <Layout>
       <Container
@@ -20,7 +34,8 @@ function bookmarks() {
         sx={{
           position: "relative",
           backgroundColor: "white",
-          height: "100vh",
+          minHeight: "100vh",
+          height: "auto",
           // position: "absolute",
           color: "black",
         }}
@@ -31,4 +46,4 @@ function bookmarks() {
   );
 }
 
-export default bookmarks;
+export default Tickets;

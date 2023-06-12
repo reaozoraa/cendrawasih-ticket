@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -37,6 +38,16 @@ const theme = createTheme();
 
 export default function SignInSide() {
   const router = useRouter();
+
+  useEffect(() => {
+    if (!pb.authStore.isValid) {
+      return {
+        redirect: {
+          destination: "/",
+        },
+      };
+    }
+  });
   async function signUp(event) {
     event.preventDefault();
     try {

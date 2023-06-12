@@ -18,7 +18,7 @@ import {
 } from "@mui/material/";
 
 import pb from "@/lib/pocketbase";
-import { BookmarkBorder } from "@mui/icons-material";
+import { History } from "@mui/icons-material";
 import Image from "next/image";
 // import logo from '../public/brand/logo.png';
 import useLogout from "@/hooks/useLogout";
@@ -39,25 +39,25 @@ const theme = createTheme({
   },
 });
 
-const pages = ["Saved"];
-const settings = [
-  {
-    label: "Profile",
-    link: "profile",
-  },
-  {
-    label: "Logout",
-    link: "sign-in",
-  },
-];
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-  >
-    •
-  </Box>
-);
+// const pages = ["Saved"];
+// const settings = [
+//   {
+//     label: "Profile",
+//     link: "profile",
+//   },
+//   {
+//     label: "Logout",
+//     link: "sign-in",
+//   },
+// ];
+// const bull = (
+//   <Box
+//     component="span"
+//     sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
+//   >
+//     •
+//   </Box>
+// );
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -117,19 +117,18 @@ function Navbar() {
                 className="flex items-center"
                 onClick={() => {
                   handleCloseNavMenu();
-                  router.push("/bookmarks");
+                  router.push("/tickets");
                 }}
               >
-                <BookmarkBorder />
+                <History />
                 <Typography variant="p" sx={{ display: "inline" }}>
-                  Saved
+                  Tiket Booking
                 </Typography>
               </Button>
             </Box>
 
-            {/* UNAUTHENTICATED */}
             {pb.authStore.isValid ? (
-              <Box sx={{ flexGrow: 0 }} className="border">
+              <Box sx={{ flexGrow: 0 }} className="">
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar

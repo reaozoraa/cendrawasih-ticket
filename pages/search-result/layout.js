@@ -44,6 +44,7 @@ export default function Layout({ children }) {
         maxWidth="auto"
         sx={{
           backgroundColor: "white",
+          minHeight: "100vh",
           height: "auto",
           // pb: "10px",
           // position: "",
