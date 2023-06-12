@@ -13,7 +13,7 @@ export default function Footer() {
           width: "100%",
           position: "relative",
           // top: "100%",
-          zIndex: "999",
+          zIndex: "100",
         }}
         component="footer"
         square
@@ -40,7 +40,7 @@ export default function Footer() {
               display: "flex",
               mb: 2,
             }}
-            className=" flex flex-wrap justify-evenly text-white"
+            className=" flex flex-wrap justify-evenly "
           >
             <Box>
               <Typography variant="h5">Ikuti Kami</Typography>
