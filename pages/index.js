@@ -97,8 +97,8 @@ function Home() {
           sx={{
             position: "relative",
             backgroundColor: "white",
-            height: "100vh",
-            position: "absolute",
+            height: "50vh",
+            // position: "absolute",
             color: "black",
           }}
         ></Container>
