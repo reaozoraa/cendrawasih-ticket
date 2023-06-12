@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "./../layout";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import pb from "@/lib/pocketbase";
 
@@ -15,17 +15,19 @@ import {
   FormLabel,
 } from "@mui/material/";
 
-function Tickets() {
+export default function Tickets() {
+  const [ticketHistory, setHistory] = useState([]);
+
+  async function getHistory() {
+    const resultList = await pb.collection("flight_ticket").getFullList({
+      expand: "first_name,last_name,phone_number,email,gender,passport_number",
+    });
+    setHistory(resultList);
+  }
+
   useEffect(() => {
-    if (!pb.authStore.isValid) {
-      console.log("heck");
-      return {
-        redirect: {
-          destination: "/",
-        },
-      };
-    }
-  });
+    getHistory();
+  }, []);
 
   return (
     <Layout>
@@ -36,14 +38,29 @@ function Tickets() {
           backgroundColor: "white",
           minHeight: "100vh",
           height: "auto",
-          // position: "absolute",
           color: "black",
         }}
       >
-        test
+        {ticketHistory.map((ticket) => (
+          <div key={ticket.id}>
+            <p>
+              <strong>Nama:</strong> {ticket.first_name} {ticket.last_name}
+            </p>
+            <p>
+              <strong>Nomor Telepon:</strong> {ticket.phone_number}
+            </p>
+            <p>
+              <strong>Email:</strong> {ticket.email}
+            </p>
+            <p>
+              <strong>Jenis Kelamin:</strong> {ticket.gender}
+            </p>
+            <p>
+              <strong>Nomor Paspor:</strong> {ticket.passport_number}
+            </p>
+          </div>
+        ))}
       </Container>
     </Layout>
   );
 }
-
-export default Tickets;

@@ -50,6 +50,7 @@ import style from "../../styles/Home.module.css";
 import Layout from "./layout";
 import Image from "next/image";
 import countries from "@/lib/countries";
+import pb from "@/lib/pocketbase";
 
 export function getServerSideProps(ctx) {
   const { fpl, tpl, dtd, dta, ps, st, air, tk } = ctx.query;
