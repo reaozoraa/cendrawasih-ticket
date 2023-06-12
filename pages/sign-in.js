@@ -54,12 +54,8 @@ export default function SignInSide() {
   }
 
   useEffect(() => {
-    if (!pb.authStore.isValid) {
-      return {
-        redirect: {
-          destination: "/",
-        },
-      };
+    if (pb.authStore.isValid) {
+      router.push("/");
     }
   });
 

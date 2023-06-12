@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Layout from "./layout";
 
@@ -93,7 +94,7 @@ export function getServerSideProps(ctx) {
   };
 }
 
-function flightPayment({
+function FlightPayment({
   ctz,
   dpE,
   dpFn,
@@ -140,6 +141,11 @@ function flightPayment({
       tk
     );
   };
+  useEffect(() => {
+    if (!pb.authStore.isValid) {
+      router.push("/sign-in");
+    }
+  });
   return (
     <>
       <Layout stage={1}>
@@ -174,4 +180,4 @@ function flightPayment({
   );
 }
 
-export default flightPayment;
+export default FlightPayment;

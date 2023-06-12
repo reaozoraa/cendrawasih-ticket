@@ -149,6 +149,12 @@ export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air, tk }) {
     setPhone(value);
   }
 
+  useEffect(() => {
+    if (!pb.authStore.isValid) {
+      router.push("/sign-up");
+    }
+  });
+
   return (
     <Layout stage={0}>
       <form onSubmit={handleSubmit(onSubmit)}>

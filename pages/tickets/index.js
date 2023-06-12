@@ -1,6 +1,7 @@
 import React from "react";
 import Layout from "./../layout";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 import pb from "@/lib/pocketbase";
 
@@ -17,6 +18,7 @@ import {
 
 export default function Tickets() {
   const [ticketHistory, setHistory] = useState([]);
+  const router = useRouter();
 
   async function getHistory() {
     const resultList = await pb.collection("flight_ticket").getFullList({
@@ -28,6 +30,12 @@ export default function Tickets() {
   useEffect(() => {
     getHistory();
   }, []);
+
+  useEffect(() => {
+    if (!pb.authStore.isValid) {
+      router.push("/sign-up");
+    }
+  });
 
   return (
     <Layout>
@@ -41,7 +49,7 @@ export default function Tickets() {
           color: "black",
         }}
       >
-        {ticketHistory.map((ticket) => (
+        {/* {ticketHistory.map((ticket) => (
           <div key={ticket.id}>
             <p>
               <strong>Nama:</strong> {ticket.first_name} {ticket.last_name}
@@ -59,7 +67,7 @@ export default function Tickets() {
               <strong>Nomor Paspor:</strong> {ticket.passport_number}
             </p>
           </div>
-        ))}
+        ))} */}
       </Container>
     </Layout>
   );
