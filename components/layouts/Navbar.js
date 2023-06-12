@@ -65,6 +65,10 @@ function Navbar() {
   const router = useRouter();
   const logout = useLogout();
 
+  const handleProfile = () => {
+    router.push("/profile");
+  };
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -163,7 +167,9 @@ function Navbar() {
                   </MenuItem>
                 ))} */}
                     <MenuItem onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">Profile</Typography>
+                      <Typography textAlign="center" onClick={handleProfile}>
+                        Profile
+                      </Typography>
                     </MenuItem>
                     <MenuItem>
                       <Typography textAlign="center" onClick={logout}>
