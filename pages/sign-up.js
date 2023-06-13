@@ -25,8 +25,8 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="/">
+        Cendrawasih
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -153,10 +153,10 @@ export default function SignInSide() {
                 id="passwordConfirm"
                 // autoComplete="current-password"
               />
-              <FormControlLabel
+              {/* <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
-              />
+              /> */}
               <Button
                 className="bg-blue-500"
                 type="submit"

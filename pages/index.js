@@ -4,7 +4,7 @@ import * as React from "react";
 import { Flight, Hotel } from "@mui/icons-material";
 import PropTypes from "prop-types";
 import FlightSearch from "../components/inputs/FlightSearch";
-import HotelSearch from "../components/inputs/HotelSearch";
+// import HotelSearch from "../components/inputs/HotelSearch";
 import Layout from "./layout";
 
 function a11yProps(index) {

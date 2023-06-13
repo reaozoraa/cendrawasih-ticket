@@ -138,7 +138,7 @@ export default function FlightSearch() {
       parseInt(num),
       seat,
     ];
-    if (validator(flightInputs) || dateError) {
+    if (validator(flightInputs) || dateError || fromPlace == toPlace) {
       setErrorMessage("*please fill up the form with the right value");
       return;
     }
