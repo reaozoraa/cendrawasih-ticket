@@ -94,102 +94,28 @@ export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air, tk }) {
   const [dateError, setDateError] = useState(null);
   const [phoneErr, setPhoneErr] = useState(null);
 
-  const [gender, setGender] = useState("male");
-  const [firstName, setFn] = useState(null);
-  const [lastname, setLn] = useState(null);
-  const [birth, setBirth] = useState(null);
-  const [passport, setPassport] = useState(null);
-  const [citizen, setCitizen] = useState(null);
-  const [issuing, setIssuing] = useState(null);
-  const [expire, setExpire] = useState(null);
-
-  const minDate = dayjs();
-  const maxDate = dayjs();
-
-  const handleGender = (e, index) => {
-    setGender((itemm) => {
-      return [
-        ...itemm.slice(0, index),
-        (itemm[index].name = e.target.value),
-        ...itemm.slice(index + 1),
-      ];
-    });
-  };
-
-  const handleFn = (e, index) => {
-    setFn((itemm) => {
-      return [
-        ...itemm.slice(0, index),
-        (itemm[index].name = e.target.value),
-        ...itemm.slice(index + 1),
-      ];
-    });
-  };
-  const handleLn = (e, index) => {
-    setLn((itemm) => {
-      return [
-        ...itemm.slice(0, index),
-        (itemm[index].name = e.target.value),
-        ...itemm.slice(index + 1),
-      ];
-    });
-  };
-  const handleBirth = (what, index) => {
-    setBirth((itemm) => {
-      return [
-        ...itemm.slice(0, index),
-        (itemm[index].name = what),
-        ...itemm.slice(index + 1),
-      ];
-    });
-  };
-  const handleCitizen = (what, index) => {
-    setCitizen((itemm) => {
-      return [
-        ...itemm.slice(0, index),
-        (itemm[index].name = what),
-        ...itemm.slice(index + 1),
-      ];
-    });
-  };
-  const handlePassport = (e, index) => {
-    setPassport((itemm) => {
-      return [
-        ...itemm.slice(0, index),
-        (itemm[index].name = e.target.value),
-        ...itemm.slice(index + 1),
-      ];
-    });
-  };
-  const handleIssue = (what, index) => {
-    setIssuing((itemm) => {
-      return [
-        ...itemm.slice(0, index),
-        (itemm[index].name = what),
-        ...itemm.slice(index + 1),
-      ];
-    });
-  };
-  const handleExpire = (what, index) => {
-    setExpire((itemm) => {
-      return [
-        ...itemm.slice(0, index),
-        (itemm[index].name = what),
-        ...itemm.slice(index + 1),
-      ];
-    });
-  };
-
   const [forms, setForms] = useState([]);
 
   useEffect(() => {
-    const arr = [];
-    for (let f = 0; f < parseInt(ps); f++) {
-      arr.push(f);
+    for (let i = 0; i < parseInt(ps); i++) {
+      setForms((prev) => [
+        ...prev,
+        {
+          idx: i,
+          gender: "",
+          first_name: "",
+          last_name: "",
+          birthday: dayjs(),
+          citizenship: "Indonesia",
+          issuing_country: "Indonesia",
+          passport: "",
+          expiration_date: dayjs(),
+          input_country: "Indonesia",
+          input_issuing_country: "Indonesia",
+        },
+      ]);
     }
-    setForms(arr);
-    // console.log(forms);
-  }, []);
+  }, [ps]);
   // const [num, setNum] = useState(null);
 
   // MANUAL
@@ -203,7 +129,7 @@ export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air, tk }) {
   } = useForm();
   const watchAllFields = watch();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (!phone || phone.length <= 6 || phone.length >= 15) {
       setPhoneErr("Invalid phone number input");
       return;
@@ -213,29 +139,44 @@ export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air, tk }) {
     data.phone = spacelessPhone;
     // data.citizenship = citizen;
     // data.issuingCountry = issuing;
-
-    // router.push({
-    //   pathname: "../booking/flight-payment",
-    //   query: {
-    //     dpE: data.dpEmail,
-    //     dpFn: data.dpFirstname,
-    //     dpLn: data.dpLastname,
-    //     pn: data.phone,
-    //     fpl: fpl,
-    //     tpl: tpl,
-    //     dtd: dtd,
-    //     dta: dta,
-    //     ps: ps,
-    //     st: st,
-    //     air: air,
-    //     tk: tk,
-    //   },
-    // });
+    let dataIds = [];
+    for (const form of forms) {
+      const data = {
+        gender: form.gender,
+        first_name: form.first_name,
+        last_name: form.last_name,
+        birth: form.birthday,
+        citizenship: form.citizenship,
+        issuing_country: form.issuing_country,
+        expire_date: form.expiration_date,
+      };
+      const costumerIdentity = await pb
+        .collection("customer_identity")
+        .create(data);
+      dataIds.push(costumerIdentity.id);
+    }
+    data.costumers = dataIds;
+    const costumerData = await pb.collection("costumer_data").create(data);
   };
 
   // const handleGender = (e) => {
   //   setGender(e.target.value);
   // };
+
+  const handleChangeForm = (e, idx) => {
+    setForms((prev) =>
+      prev.map((passanger) => {
+        if (passanger.idx == idx) {
+          return {
+            ...passanger,
+            [e.target.name]: e.target.value,
+          };
+        }
+
+        return passanger;
+      })
+    );
+  };
 
   function handleOnChange(value) {
     setPhone(value);
@@ -312,285 +253,351 @@ export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air, tk }) {
             </Box>
           </Box>
         </Card>
-        <Box sx={{ m: 10 }}></Box>
-        {forms
-          ? forms.map((passangers) => (
-              <Box className="" key={passangers}>
-                <Typography variant="h5">Detail Traveler</Typography>
-                <Card sx={{ maxWidth: 800, m: "10px", paddingBottom: "20px" }}>
-                  <CardHeader
-                    title="Data penumpang"
-                    subheader={passangers}
-                    className=""
-                  />
-
-                  {/* DISCLAIMER */}
-                  {passangers == 0 ? (
-                    <Box>
-                      <Box sx={{ p: 0 }} className="flex ">
-                        <Box
-                          sx={{ p: 0, m: 0, width: "5px", height: "100" }}
-                          className=" bg-orange-400"
-                        />
-                        <Box sx={{ p: 2 }} className=" bg-yellow-100">
-                          <Box>
-                            <Typography variant="p">
-                              <Warning className="text-yellow-500" />
-                              Detail Traveler
-                            </Typography>
-                            <li>
-                              Paspor dengan masa berlaku min. 6 bulan dari
-                              tanggal keberangkatan dibutuhkan untuk
-                              rute/transit ke luar negeri.
-                            </li>
-                            <li>
-                              Hindari kesalahan apapun dalam memasukkan nama,
-                              karena Anda mungkin tidak diperbolehkan mengoreksi
-                              setelah booking. Ketuk di bawah untuk caranya.
-                            </li>
-                          </Box>
+        <Box sx={{ m: 10 }}>
+          <Typography variant="h5">Detail Traveler</Typography>
+          {forms.map((passangers) => (
+            <Box className="" key={passangers.idx}>
+              <Card sx={{ maxWidth: 800, m: "10px", paddingBottom: "20px" }}>
+                <CardHeader title="Data penumpang" className="" />
+                {/* DISCLAIMER */}
+                {passangers == 0 ? (
+                  <Box>
+                    <Box sx={{ p: 0 }} className="flex ">
+                      <Box
+                        sx={{ p: 0, m: 0, width: "5px", height: "100" }}
+                        className=" bg-orange-400"
+                      />
+                      <Box sx={{ p: 2 }} className=" bg-yellow-100">
+                        <Box>
+                          <Typography variant="p">
+                            <Warning className="text-yellow-500" />
+                            Detail Traveler
+                          </Typography>
+                          <li>
+                            Paspor dengan masa berlaku min. 6 bulan dari tanggal
+                            keberangkatan dibutuhkan untuk rute/transit ke luar
+                            negeri.
+                          </li>
+                          <li>
+                            Hindari kesalahan apapun dalam memasukkan nama,
+                            karena Anda mungkin tidak diperbolehkan mengoreksi
+                            setelah booking. Ketuk di bawah untuk caranya.
+                          </li>
                         </Box>
                       </Box>
-                      <Box
-                        sx={{ m: 2 }}
-                        className="flex flex-wrap gap-5 justify-between"
-                      >
-                        <Image
-                          src="/images/example-passport.png"
-                          alt="the image"
-                          width={530}
-                          height={230}
-                        />
-                      </Box>
-                      <Box
-                        sx={{ m: 2 }}
-                        className="flex flex-wrap gap-5 justify-between"
-                      >
-                        <Typography variant="p" className="text-green-500">
-                          Penting: Paspor dengan masa berlaku min. 6 bulan dari
-                          tanggal keberangkatan dibutuhkan untuk rute/transit ke
-                          luar negeri.
-                        </Typography>
-                        <Typography variant="p" className="text-yellow-500">
-                          Pastikan nama penumpang persis seperti yang tertulis
-                          di KTP/Paspor/SIM yang dikeluarkan pemerintah.
-                        </Typography>
-                        <Typography variant="p" className="text-yellow-500">
-                          Hindari kesalahan apa pun, karena beberapa maskapai
-                          tidak mengizinkan koreksi nama setelah pemesanan.
-                        </Typography>
-                      </Box>
                     </Box>
-                  ) : null}
+                    <Box
+                      sx={{ m: 2 }}
+                      className="flex flex-wrap gap-5 justify-between"
+                    >
+                      <Image
+                        src="/images/example-passport.png"
+                        alt="the image"
+                        width={530}
+                        height={230}
+                      />
+                    </Box>
+                    <Box
+                      sx={{ m: 2 }}
+                      className="flex flex-wrap gap-5 justify-between"
+                    >
+                      <Typography variant="p" className="text-green-500">
+                        Penting: Paspor dengan masa berlaku min. 6 bulan dari
+                        tanggal keberangkatan dibutuhkan untuk rute/transit ke
+                        luar negeri.
+                      </Typography>
+                      <Typography variant="p" className="text-yellow-500">
+                        Pastikan nama penumpang persis seperti yang tertulis di
+                        KTP/Paspor/SIM yang dikeluarkan pemerintah.
+                      </Typography>
+                      <Typography variant="p" className="text-yellow-500">
+                        Hindari kesalahan apa pun, karena beberapa maskapai
+                        tidak mengizinkan koreksi nama setelah pemesanan.
+                      </Typography>
+                    </Box>
+                  </Box>
+                ) : null}
 
-                  {/* PASSPORT FORM */}
+                {/* PASSPORT FORM */}
+                <Box
+                  sx={{ m: 2 }}
+                  className="flex flex-wrap gap-5 justify-between"
+                >
+                  <FormControl sx={{ width: "120px" }}>
+                    <InputLabel id="simple-select-label">Gender</InputLabel>
+                    <Select
+                      labelId="select-label"
+                      id="simple-select"
+                      label="Gender"
+                      name="gender"
+                      value={passangers.gender}
+                      onChange={(e) => handleChangeForm(e, passangers.idx)}
+                      // {...register("pspGender")}
+                    >
+                      <MenuItem value="male">Male</MenuItem>
+                      <MenuItem value="female">Female</MenuItem>
+                      <MenuItem value="other">Other</MenuItem>
+                    </Select>
+                  </FormControl>
                   <Box
-                    sx={{ m: 2 }}
-                    className="flex flex-wrap gap-5 justify-between"
+                    sx={{ width: "100%" }}
+                    className="flex flex-wrap items-end gap-5 justify-between"
                   >
-                    <FormControl sx={{ width: "120px" }}>
-                      <InputLabel id="simple-select-label">Gender</InputLabel>
-                      <Select
-                        labelId="select-label"
-                        id="simple-select"
-                        value={gender}
-                        defaultValue={gender}
-                        label="Gender"
-                        onChange={(e) => {
-                          handleGender(e, passangers);
-                        }}
-                        // {...register("pspGender")}
-                      >
-                        <MenuItem value="male">Male</MenuItem>
-                        <MenuItem value="female">Female</MenuItem>
-                        <MenuItem value="other">Other</MenuItem>
-                      </Select>
-                    </FormControl>
-                    <Box
-                      sx={{ width: "100%" }}
-                      className="flex flex-wrap items-end gap-5 justify-between"
-                    >
-                      <Box sx={{ width: 300 }} className="label-box">
-                        <Typography variant="p">
-                          Nama Depan & Tengah (jika ada) (ex: Budi Sentoso)
-                        </Typography>
-                        <TextField
-                          required
-                          id=""
-                          defaultValue=""
-                          sx={{ width: "100%" }}
-                          onChange={(e) => {
-                            handleFn(e, passangers);
-                          }}
-                          // {...register("pspFirstname", {
-                          //   required: true,
-                          //   maxLength: 20,
-                          // })}
-                        />
-                      </Box>
-                      <Box sx={{ width: 300 }} className="label-box">
-                        <Typography variant="p">
-                          Nama Belakang (ex: Saputro)
-                        </Typography>
-                        <TextField
-                          required
-                          id=""
-                          defaultValue=""
-                          sx={{ width: "100%" }}
-                          onChange={(e) => {
-                            handleLn(e, passangers);
-                          }}
-                          // {...register("pspLastname", {
-                          //   required: true,
-                          //   maxLength: 20,
-                          // })}
-                        />
-                      </Box>
-                    </Box>
-                    <Box
-                      sx={{ width: "100%" }}
-                      className="flex flex-wrap items-end gap-5 justify-between"
-                    >
-                      <Box sx={{ width: 300 }} className="label-box">
-                        <Typography variant="p">Tanggal Lahir</Typography>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                          <DatePicker
-                            maxDate={maxDate}
-                            value={dateValue}
-                            onChange={(newValue) =>
-                              handleBirth(newValue, passangers)
-                            }
-                            // {...register("pspDate")}
-                          />
-                        </LocalizationProvider>
-                      </Box>
-                      <Box sx={{ width: 300 }} className="label-box">
-                        <Typography variant="p">Kewarganegaraan</Typography>
-                        <Autocomplete
-                          required
-                          id="country-select-demo"
-                          sx={{ width: 300 }}
-                          options={countries}
-                          autoHighlight
-                          getOptionLabel={(option) => option.label}
-                          // {...register("psp-citizenship")}
-                          onChange={(event, value) =>
-                            handleCitizen(value.label, passangers)
-                          }
-                          renderOption={(props, option) => (
-                            <Box
-                              component="li"
-                              sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
-                              {...props}
-                            >
-                              <img
-                                loading="lazy"
-                                width="20"
-                                src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-                                srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
-                                alt=""
-                              />
-                              {option.label} ({option.code})
-                            </Box>
-                          )}
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              // label="Choose a country"
-                              inputProps={{
-                                ...params.inputProps,
-                                autoComplete: "new-password", // disable autocomplete and autofill
-                              }}
-                            />
-                          )}
-                        />
-                      </Box>
-                    </Box>
-
-                    {/*  */}
-                    <Box
-                      sx={{ width: "100%" }}
-                      className="flex flex-wrap items-end gap-5 justify-between"
-                    >
-                      <Box sx={{ width: 300 }} className="label-box">
-                        <Typography variant="p">Nomor Paspor</Typography>
-                        <TextField
-                          fullWidth
-                          required
-                          id=""
-                          defaultValue=""
-                          // {...register("pspPassport", {
-                          //   required: true,
-                          //   maxLength: 20,
-                          // })}
-                          onChange={(e) => {
-                            handlePassport(e, passangers);
-                          }}
-                          inputProps={{ style: { textTransform: "uppercase" } }}
-                        />
-                      </Box>
-                      <Box sx={{ width: 300 }} className="label-box">
-                        <Typography variant="p">Negara Penerbit</Typography>
-                        <Autocomplete
-                          required
-                          id="country-select-demo"
-                          sx={{ width: 300 }}
-                          options={countries}
-                          autoHighlight
-                          getOptionLabel={(option) => option.label}
-                          // {...register("psp-issuing-country")}
-                          onChange={(event, value) =>
-                            handleIssue(value.label, passangers)
-                          }
-                          renderOption={(props, option) => (
-                            <Box
-                              component="li"
-                              sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
-                              {...props}
-                            >
-                              <img
-                                loading="lazy"
-                                width="20"
-                                src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-                                srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
-                                alt=""
-                              />
-                              {option.label} ({option.code})
-                            </Box>
-                          )}
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              // label="Choose a country"
-                              inputProps={{
-                                ...params.inputProps,
-                                autoComplete: "new-password", // disable autocomplete and autofill
-                              }}
-                            />
-                          )}
-                        />
-                      </Box>
+                    <Box sx={{ width: 300 }} className="label-box">
+                      <Typography variant="p">
+                        Nama Depan & Tengah (jika ada) (ex: Budi Sentoso)
+                      </Typography>
+                      <TextField
+                        required
+                        id=""
+                        defaultValue=""
+                        sx={{ width: "100%" }}
+                        name="first_name"
+                        value={passangers.first_name}
+                        onChange={(e) => handleChangeForm(e, passangers.idx)}
+                        // {...register("pspFirstname", {
+                        //   required: true,
+                        //   maxLength: 20,
+                        // })}
+                      />
                     </Box>
                     <Box sx={{ width: 300 }} className="label-box">
-                      <Typography variant="p">Tanggal Habis Berlaku</Typography>
+                      <Typography variant="p">
+                        Nama Belakang (ex: Saputro)
+                      </Typography>
+                      <TextField
+                        required
+                        id=""
+                        defaultValue=""
+                        sx={{ width: "100%" }}
+                        name="last_name"
+                        value={passangers.last_name}
+                        onChange={(e) => handleChangeForm(e, passangers.idx)}
+                        // {...register("pspLastname", {
+                        //   required: true,
+                        //   maxLength: 20,
+                        // })}
+                      />
+                    </Box>
+                  </Box>
+                  <Box
+                    sx={{ width: "100%" }}
+                    className="flex flex-wrap items-end gap-5 justify-between"
+                  >
+                    <Box sx={{ width: 300 }} className="label-box">
+                      <Typography variant="p">Tanggal Lahir</Typography>
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
-                          // label="Tanggal Pergi"
-                          // minDate={minDate}
-                          value={dateValueExpire}
-                          // {...register("pspExpire")}
-                          onChange={(newValue) =>
-                            handleExpire(newValue, passangers)
-                          }
+                          value={passangers.birthday}
+                          onChange={(e) => {
+                            e = {
+                              ...e,
+                              target: {
+                                ...e.target,
+                                name: "birthday",
+                              },
+                            };
+                            handleChangeForm(e, passangers.idx);
+                          }}
+                          // {...register("pspDate")}
                         />
                       </LocalizationProvider>
                     </Box>
+                    <Box sx={{ width: 300 }} className="label-box">
+                      <Typography variant="p">Kewarganegaraan</Typography>
+                      <Autocomplete
+                        required
+                        id="country-select-demo"
+                        sx={{ width: 300 }}
+                        options={countries}
+                        autoHighlight
+                        getOptionLabel={(option) =>
+                          option.label ?? passangers.citizenship
+                        }
+                        inputValue={passangers.input_country}
+                        onInputChange={(e, value) => {
+                          e = {
+                            ...e,
+                            target: {
+                              name: "input_country",
+                              value: value ?? "",
+                            },
+                          };
+                          handleChangeForm(e, passangers.idx);
+                        }}
+                        value={passangers.citizenship}
+                        onChange={(e, value) => {
+                          console.log(value);
+                          e = {
+                            ...e,
+                            target: {
+                              name: "input_country",
+                              value: value ?? "",
+                            },
+                          };
+                          handleChangeForm(e, passangers.idx);
+                          e = {
+                            ...e,
+                            target: {
+                              name: "citizenship",
+                              value: value ?? "",
+                            },
+                          };
+                          handleChangeForm(e, passangers.idx);
+                        }}
+                        // {...register("psp-citizenship")}
+                        renderOption={(props, option) => (
+                          <Box
+                            component="li"
+                            sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
+                            {...props}
+                          >
+                            <img
+                              loading="lazy"
+                              width="20"
+                              src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+                              srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+                              alt=""
+                            />
+                            {option.label} ({option.code})
+                          </Box>
+                        )}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            // label="Choose a country"
+                            inputProps={{
+                              ...params.inputProps,
+                              autoComplete: "new-password", // disable autocomplete and autofill
+                            }}
+                          />
+                        )}
+                      />
+                    </Box>
                   </Box>
-                </Card>
-                {/* <input type="submit" /> */}
-              </Box>
-            ))
-          : null}
+
+                  {/*  */}
+                  <Box
+                    sx={{ width: "100%" }}
+                    className="flex flex-wrap items-end gap-5 justify-between"
+                  >
+                    <Box sx={{ width: 300 }} className="label-box">
+                      <Typography variant="p">Nomor Paspor</Typography>
+                      <TextField
+                        fullWidth
+                        required
+                        id=""
+                        name="passport"
+                        value={passangers.passport}
+                        onChange={(e) => handleChangeForm(e, passangers.idx)}
+                        // {...register("pspPassport", {
+                        //   required: true,
+                        //   maxLength: 20,
+                        // })}
+                        inputProps={{
+                          style: { textTransform: "uppercase" },
+                        }}
+                      />
+                    </Box>
+                    <Box sx={{ width: 300 }} className="label-box">
+                      <Typography variant="p">Negara Penerbit</Typography>
+                      <Autocomplete
+                        required
+                        id="country-select-demo"
+                        sx={{ width: 300 }}
+                        options={countries}
+                        autoHighlight
+                        getOptionLabel={(option) =>
+                          option.label ?? passangers.issuing_country
+                        }
+                        inputValue={passangers.input_issuing_country}
+                        onInputChange={(e, value) => {
+                          e = {
+                            ...e,
+                            target: {
+                              name: "input_issuing_country",
+                              value: value ?? "",
+                            },
+                          };
+                          handleChangeForm(e, passangers.idx);
+                        }}
+                        value={passangers.issuing_country}
+                        onChange={(e, value) => {
+                          console.log(value);
+                          e = {
+                            ...e,
+                            target: {
+                              name: "input_issuing_country",
+                              value: value ?? "",
+                            },
+                          };
+                          handleChangeForm(e, passangers.idx);
+                          e = {
+                            ...e,
+                            target: {
+                              name: "issuing_country",
+                              value: value ?? "",
+                            },
+                          };
+                          handleChangeForm(e, passangers.idx);
+                        }}
+                        renderOption={(props, option) => (
+                          <Box
+                            component="li"
+                            sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
+                            {...props}
+                          >
+                            <img
+                              loading="lazy"
+                              width="20"
+                              src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+                              srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+                              alt=""
+                            />
+                            {option.label} ({option.code})
+                          </Box>
+                        )}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            // label="Choose a country"
+                            inputProps={{
+                              ...params.inputProps,
+                              autoComplete: "new-password", // disable autocomplete and autofill
+                            }}
+                          />
+                        )}
+                      />
+                    </Box>
+                  </Box>
+                  <Box sx={{ width: 300 }} className="label-box">
+                    <Typography variant="p">Tanggal Habis Berlaku</Typography>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DatePicker
+                        // label="Tanggal Pergi"
+                        // minDate={minDate}
+                        value={passangers.expiration_date}
+                        onChange={(e) => {
+                          e = {
+                            ...e,
+                            target: {
+                              ...e.target,
+                              name: "expiration_date",
+                            },
+                          };
+                          handleChangeForm(e, passangers.idx);
+                        }}
+                        // {...register("pspExpire")}
+                      />
+                    </LocalizationProvider>
+                  </Box>
+                </Box>
+              </Card>
+              {/* <input type="submit" /> */}
+            </Box>
+          ))}
+        </Box>
+
         <Button variant="contained" className="bg-blue-500 m-2" type="submit">
           Lanjut
         </Button>
