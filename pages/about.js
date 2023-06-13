@@ -1,3 +1,3 @@
-export default function(){
-    return <h1>Halaman</h1>
-} 
+export default function about() {
+  return <h1>Halaman</h1>;
+}

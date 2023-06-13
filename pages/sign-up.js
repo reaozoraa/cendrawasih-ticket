@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -24,8 +25,8 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="/">
+        Cendrawasih
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -37,6 +38,12 @@ const theme = createTheme();
 
 export default function SignInSide() {
   const router = useRouter();
+
+  useEffect(() => {
+    if (pb.authStore.isValid) {
+      router.push("/");
+    }
+  });
   async function signUp(event) {
     event.preventDefault();
     try {
@@ -146,10 +153,10 @@ export default function SignInSide() {
                 id="passwordConfirm"
                 // autoComplete="current-password"
               />
-              <FormControlLabel
+              {/* <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
-              />
+              /> */}
               <Button
                 className="bg-blue-500"
                 type="submit"

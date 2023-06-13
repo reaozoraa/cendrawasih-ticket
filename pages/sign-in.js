@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -28,8 +29,8 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="/">
+        Cendrawasih
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -51,6 +52,12 @@ export default function SignInSide() {
     login({ email: data.email, password: data.password });
     reset();
   }
+
+  useEffect(() => {
+    if (pb.authStore.isValid) {
+      router.push("/");
+    }
+  });
 
   async function onGoogleLogin() {
     try {

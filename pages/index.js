@@ -4,7 +4,7 @@ import * as React from "react";
 import { Flight, Hotel } from "@mui/icons-material";
 import PropTypes from "prop-types";
 import FlightSearch from "../components/inputs/FlightSearch";
-import HotelSearch from "../components/inputs/HotelSearch";
+// import HotelSearch from "../components/inputs/HotelSearch";
 import Layout from "./layout";
 
 function a11yProps(index) {
@@ -65,19 +65,19 @@ function Home() {
                 <Tab
                   label={
                     <div className="flex text-lg">
-                      <Flight /> Flight
+                      <Flight /> Flight Search
                     </div>
                   }
                   {...a11yProps(0)}
                 />
-                <Tab
+                {/* <Tab
                   label={
                     <div className="flex text-lg">
                       <Hotel />  Hotel
                     </div>
                   }
                   {...a11yProps(1)}
-                />
+                /> */}
                 {/* <Tab icon={<Flight />} label="Flight" {...a11yProps(0)}  />
               <Tab icon={<Hotel />} label="Hotel" {...a11yProps(1)}  /> */}
               </Tabs>
@@ -86,9 +86,9 @@ function Home() {
               <TabPanel value={formSection} index={0}>
                 <FlightSearch />
               </TabPanel>
-              <TabPanel value={formSection} index={1}>
+              {/* <TabPanel value={formSection} index={1}>
                 <HotelSearch></HotelSearch>
-              </TabPanel>
+              </TabPanel> */}
             </CardContent>
           </Card>
         </Container>
