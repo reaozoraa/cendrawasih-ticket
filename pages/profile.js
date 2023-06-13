@@ -19,6 +19,7 @@ import {
 } from "@mui/material/";
 import Layout from "./layout";
 import pb from "@/lib/pocketbase";
+import Image from "next/image";
 import { Component, useEffect, useState } from "react";
 // import {logout} from components/layouts/Navbar
 // import { logout } from "@/components/layouts/Navbar";
@@ -61,7 +62,7 @@ export default function Profile() {
               <div key={profile.id} className="flex gap-5 px-3 py-2 border-b">
                 <div className="avatar">
                   <div className="w-16 rounded-full">
-                    <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    <img src="/images/pp.png" />
                   </div>
                 </div>
                 <div className="flex flex-col justify-center text-black">
@@ -82,7 +83,7 @@ export default function Profile() {
               </button>
             </div>
           </div>
-          <div className="w-3/4 flex flex-col gap-10">
+          {/* <div className="w-3/4 flex flex-col gap-10">
             <div className="border">
               <div className="w-full flex justify-between items-center px-5 py-2 border-b">
                 <div className="flex flex-col justify-center text-black">
@@ -107,7 +108,7 @@ export default function Profile() {
               </div>
               <div className="h-8">+6288 8888 8888</div>
             </div>
-          </div>
+          </div> */}
         </div>
       </Container>
     </Layout>
