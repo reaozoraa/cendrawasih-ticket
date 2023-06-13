@@ -137,26 +137,33 @@ export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air, tk }) {
     setPhoneErr(null);
     const spacelessPhone = phone.replace(/\s+/g, "");
     data.phone = spacelessPhone;
+    console.log(data);
     // data.citizenship = citizen;
     // data.issuingCountry = issuing;
-    let dataIds = [];
-    for (const form of forms) {
-      const data = {
-        gender: form.gender,
-        first_name: form.first_name,
-        last_name: form.last_name,
-        birth: form.birthday,
-        citizenship: form.citizenship,
-        issuing_country: form.issuing_country,
-        expire_date: form.expiration_date,
-      };
-      const costumerIdentity = await pb
-        .collection("customer_identity")
-        .create(data);
-      dataIds.push(costumerIdentity.id);
-    }
-    data.costumers = dataIds;
-    const costumerData = await pb.collection("costumer_data").create(data);
+    // let dataIds = [];
+    // for (const form of forms) {
+    //   const data = {
+    //     gender: form.gender,
+    //     first_name: form.first_name,
+    //     last_name: form.last_name,
+    //     birth: form.birthday,
+    //     citizenship: form.citizenship,
+    //     issuing_country: form.issuing_country,
+    //     expire_date: form.expiration_date,
+    //   };
+    //   const costumerIdentity = await pb
+    //     .collection("customer_identity")
+    //     .create(data);
+    //   dataIds.push(costumerIdentity.id);
+    // }
+    // data.costumers = dataIds;
+    // const dataTwo = {
+    //   first_name: data,
+    //   last_name: data,
+    //   phone_number: data,
+    //   email: data,
+    // };
+    // const costumerData = await pb.collection("costumer_data").create(data);
   };
 
   // const handleGender = (e) => {
