@@ -1,6 +1,7 @@
 import { Container, CssBaseline } from "@mui/material/";
 import { useRouter } from "next/router";
 import pb from "@/lib/pocketbase";
+import React, { useEffect } from "react";
 
 import Footer from "@/components/layouts/Footer";
 import NavbarExc from "@/components/layouts/NavbarExc";

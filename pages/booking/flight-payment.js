@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Layout from "./layout";
+import pb from "@/lib/pocketbase";
 
 import {
   Box,
