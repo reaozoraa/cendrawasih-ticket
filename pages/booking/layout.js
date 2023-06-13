@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
 import pb from "@/lib/pocketbase";
+import React, { useEffect } from "react";
 
 import Footer from "@/components/layouts/Footer";
 import NavbarExc from "@/components/layouts/NavbarExc";

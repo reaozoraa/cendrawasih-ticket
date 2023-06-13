@@ -141,7 +141,7 @@ function Navbar() {
                       <Avatar
                         alt="Remy Sharp"
                         // src={user?.photoURL}
-                        src="/static/images/avatar/2.jpg"
+                        src="/images/pp.png"
                       />
                     </IconButton>
                   </Tooltip>
