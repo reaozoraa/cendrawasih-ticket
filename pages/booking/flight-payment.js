@@ -16,131 +16,60 @@ import {
 } from "@mui/material/";
 
 export function getServerSideProps(ctx) {
-  const {
-    ctz,
-    dpE,
-    dpFn,
-    dpLn,
-    issC,
-    pn,
-    pspD,
-    pspExp,
-    pspFn,
-    pspG,
-    pspLn,
-    pspPp,
-    fpl,
-    tpl,
-    dtd,
-    dta,
-    ps,
-    st,
-    air,
-    tk,
-  } = ctx.query;
+  const { fpl, tpl, dtd, dta, pr, ps, st, air, ctsid, tk } = ctx.query;
   if (
-    !ctz ||
-    !dpE ||
-    !dpFn ||
-    !dpLn ||
-    !issC ||
-    !pn ||
-    !pspD ||
-    !pspExp ||
-    !pspFn ||
-    !pspG ||
-    !pspLn ||
-    !pspPp ||
     !fpl ||
     !tpl ||
     !dtd ||
     !dta ||
+    !pr ||
     !ps ||
     !st ||
     !air ||
+    !ctsid ||
     !tk
   ) {
-    // return {
-    //   redirect: {
-    //     destination: "/",
-    //   },
-    // };
     return {
       notFound: true,
     };
   }
   return {
     props: {
-      ctz,
-      dpE,
-      dpFn,
-      dpLn,
-      issC,
-      pn,
-      pspD,
-      pspExp,
-      pspFn,
-      pspG,
-      pspLn,
-      pspPp,
       fpl,
       tpl,
       dtd,
       dta,
+      pr,
       ps,
       st,
       air,
+      ctsid,
       tk,
     },
   };
 }
 
-function FlightPayment({
-  ctz,
-  dpE,
-  dpFn,
-  dpLn,
-  issC,
-  pn,
-  pspD,
-  pspExp,
-  pspFn,
-  pspG,
-  pspLn,
-  pspPp,
-  fpl,
-  tpl,
-  dtd,
-  dta,
-  ps,
-  st,
-  air,
-  tk,
-}) {
-  const handlePayment = (e) => {
+function FlightPayment({ fpl, tpl, dtd, dta, pr, ps, st, air, ctsid, tk }) {
+  const router = useRouter();
+  const handlePayment = async (e) => {
     e.preventDefault();
-    console.log(
-      ctz,
-      dpE,
-      dpFn,
-      dpLn,
-      issC,
-      pn,
-      pspD,
-      pspExp,
-      pspFn,
-      pspG,
-      pspLn,
-      pspPp,
-      fpl,
-      tpl,
-      dtd,
-      dta,
-      ps,
-      st,
-      air,
-      tk
-    );
+    const flightData = {
+      origin: fpl,
+      destination: tpl,
+      departure: dtd,
+      arrival: dta,
+      price: pr,
+      seat_class: st,
+      total_seats: ps,
+      airline: air,
+      customers: ctsid,
+    };
+    const ticket = await pb.collection("flight_ticket").create(flightData);
+    console.log(ticket);
+    router.push({
+      pathname: "/",
+      // openSnackbar: true,
+    });
   };
   useEffect(() => {
     if (!pb.authStore.isValid) {

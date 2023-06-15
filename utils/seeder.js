@@ -95,11 +95,12 @@ async function seeder(fp, tp, dt, ps, st) {
     }
 
     for (let rd = 0; rd < 10; rd++) {
+      let rng = RNG(2);
       generatedDatas.push({
         origin: newFrom,
         destination: newTo,
-        depart: dateNewFormat,
-        arrive: dateNewFormat.add(RNG(2) + 1, "hours"),
+        depart: dateNewFormat.add(rng, "hours"),
+        arrive: dateNewFormat.add(rng + RNG(2) + 1, "hours"),
         price: prAdd(RNGP(pricePoint)),
         // seat: "",
         airline: airlines[RNG(10)],

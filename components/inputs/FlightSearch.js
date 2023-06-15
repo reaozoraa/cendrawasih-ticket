@@ -130,7 +130,6 @@ export default function FlightSearch() {
   const handleSearchFlight = (e) => {
     e.preventDefault();
     const token = randomBytes(32).toString("hex");
-    // router.push(`/search-result/flight-result?fp=${fromPlace}&tp=${toPlace}&dt=${dateValue}&ps=${num}&st=${seat}`);
     const flightInputs = [
       fromPlace,
       toPlace,
@@ -143,18 +142,12 @@ export default function FlightSearch() {
       return;
     }
     setErrorMessage(null);
-
-    const dateObject = dateValue.toObject();
-    const dateToString = `${dateObject.months + 1}-${dateObject.date}-${
-      dateObject.years
-    }`;
-
     router.push({
       pathname: "/search-result/flight-result",
       query: {
         fp: fromPlace,
         tp: toPlace,
-        dt: dateToString,
+        dt: dateValue.toString(),
         ps: num,
         st: seat,
         tk: token,

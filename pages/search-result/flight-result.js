@@ -13,6 +13,8 @@ import {
 
 import Layout from "./layout";
 
+import dayjs from "dayjs";
+import toObject from "dayjs/plugin/toObject";
 import pb from "@/lib/pocketbase";
 import moneyFormatter from "@/utils/moneyFormatter";
 import seeder from "@/utils/seeder";
@@ -66,6 +68,7 @@ export default function FlightResult({ fp, tp, dt, ps, st, tk }) {
     e.preventDefault();
     if (pb.authStore.isValid) {
       console.log(leFlight);
+
       router.push({
         pathname: "../booking/flight-booking",
         query: {
@@ -73,6 +76,7 @@ export default function FlightResult({ fp, tp, dt, ps, st, tk }) {
           tpl: leFlight.destination.id,
           dtd: leFlight.depart.toString(),
           dta: leFlight.arrive.toString(),
+          pr: leFlight.price,
           ps: ps,
           st: st,
           air: leFlight.airline.id,
@@ -83,26 +87,13 @@ export default function FlightResult({ fp, tp, dt, ps, st, tk }) {
       router.push("/sign-in");
     }
     // pb.authStore.isValid
-    //   ? router.push("../booking/flight-booking")
-    //   : router.push("/sign-in");
   };
 
-  // const [airlines, setAirlines] = useState([]);
   async function getFlightResult() {
-    // const datas = seeder(fp, tp, dt, ps, st);
-    // console.log(dt);
-    // const resultList = await pb.collection("flight_result").getFullList({
-    //   expand: "origin,destination,airline,price,depature,arrival",
-    // });
-    // setFlights(resultList);
     const results = await seeder(fp, tp, dt, ps, st);
-    console.log(results[0]);
+    // console.log(dayjs(dt));
     setFlights(results);
   }
-  // useEffect(() => {
-  //   getFlight();
-  //   console.log(dt);
-  // }, []);
 
   useEffect(() => {
     getFlightResult();
