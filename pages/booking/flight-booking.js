@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 
 import dayjs from "dayjs";
+import toObject from "dayjs/plugin/toObject";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateField } from "@mui/x-date-pickers/DateField";
@@ -53,15 +54,11 @@ import Image from "next/image";
 import countries from "@/lib/countries";
 import pb from "@/lib/pocketbase";
 
-export function getServerSideProps(ctx) {
-  const { fpl, tpl, dtd, dta, ps, st, air, tk } = ctx.query;
-  if (!fpl || !tpl || !dtd || !dta || !ps || !st || !air || !tk) {
-    // return {
-    //   redirect: {
-    //     destination: "/",
-    //   },
-    // };
+dayjs.extend(toObject);
 
+export function getServerSideProps(ctx) {
+  const { fpl, tpl, dtd, dta, pr, ps, st, air, tk } = ctx.query;
+  if (!fpl || !tpl || !dtd || !dta || !pr || !ps || !st || !air || !tk) {
     return {
       notFound: true,
     };
@@ -72,6 +69,7 @@ export function getServerSideProps(ctx) {
       tpl,
       dtd,
       dta,
+      pr,
       ps,
       st,
       air,
@@ -87,7 +85,17 @@ export function getServerSideProps(ctx) {
 //   );
 // }
 
-export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air, tk }) {
+export default function FlightResult({
+  fpl,
+  tpl,
+  dtd,
+  dta,
+  pr,
+  ps,
+  st,
+  air,
+  tk,
+}) {
   const router = useRouter();
   const [dateValue, setDate] = useState(dayjs());
   const [dateValueExpire, setDateExpire] = useState(dayjs());
@@ -97,6 +105,7 @@ export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air, tk }) {
   const [forms, setForms] = useState([]);
 
   useEffect(() => {
+    setForms([]);
     for (let i = 0; i < parseInt(ps); i++) {
       setForms((prev) => [
         ...prev,
@@ -129,6 +138,7 @@ export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air, tk }) {
   } = useForm();
   const watchAllFields = watch();
 
+  // -------------------------------- SUBMIT
   const onSubmit = async (data) => {
     if (!phone || phone.length <= 6 || phone.length >= 15) {
       setPhoneErr("Invalid phone number input");
@@ -139,6 +149,13 @@ export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air, tk }) {
     data.phone = spacelessPhone;
     // data.citizenship = citizen;
     // data.issuingCountry = issuing;
+
+    const dataTwo = {
+      first_name: data.dpFirstname,
+      last_name: data.dpLastname,
+      phone_number: data.phone,
+      email: data.dpEmail,
+    };
     let dataIds = [];
     for (const form of forms) {
       const data = {
@@ -155,13 +172,26 @@ export default function FlightResult({ fpl, tpl, dtd, dta, ps, st, air, tk }) {
         .create(data);
       dataIds.push(costumerIdentity.id);
     }
-    data.costumers = dataIds;
-    const costumerData = await pb.collection("costumer_data").create(data);
-  };
+    dataTwo.costumers = dataIds;
 
-  // const handleGender = (e) => {
-  //   setGender(e.target.value);
-  // };
+    const costumerData = await pb.collection("costumer_data").create(dataTwo);
+    router.push({
+      pathname: "/booking/flight-payment",
+      query: {
+        fpl,
+        tpl,
+        dtd,
+        dta,
+        pr,
+        ps,
+        st,
+        air,
+        ctsid: costumerData.id,
+        tk,
+      },
+    });
+  };
+  // ---------------------------------------------- END SUBMIT
 
   const handleChangeForm = (e, idx) => {
     setForms((prev) =>

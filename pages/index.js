@@ -1,4 +1,13 @@
-import { Box, Card, CardContent, Container, Tab, Tabs } from "@mui/material/";
+import {
+  Alert,
+  Box,
+  Card,
+  CardContent,
+  Container,
+  Snackbar,
+  Tab,
+  Tabs,
+} from "@mui/material/";
 import * as React from "react";
 
 import { Flight, Hotel } from "@mui/icons-material";
@@ -38,13 +47,22 @@ TabPanel.propTypes = {
 
 function Home() {
   const [formSection, setFormSection] = React.useState(0);
-
+  // const [snackbar, setSnackbar] = React.useState(location.openSnackbar);
   const handleFormSection = (event, newValue) => {
     setFormSection(newValue);
   };
 
   return (
     <>
+      {/* <Snackbar
+        open={snackbar}
+        autoHideDuration={6000}
+        onClose={() => setSnackbar(false)}
+      >
+        <Alert severity="success" onClose={() => setSnackbar(false)}>
+          Success! Your message has been sent.
+        </Alert>
+      </Snackbar> */}
       <Layout>
         <Container
           maxWidth="xl"
