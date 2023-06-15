@@ -29,18 +29,18 @@ export default function Tickets() {
   const router = useRouter();
 
   async function getHistory() {
-    // const resultList = await pb.collection("flight_ticket").getFullList({
-    //   expand: "first_name,last_name,phone_number,email,gender,passport_number",
-    // });
-    // const resultList = await pb.collection("flight_ticket").getFullList(1, 5, {
-    //   filter: 'created >= "2022-01-01 00:00:00" && someField1 != someField2',
-    //   expand: "origin,destination,airline",
-    // });
-    const resultList = await pb.collection("flight_ticket").getFullList({
+    const userId = pb.authStore.model.id;
+    // const resultList = await pb
+    //   .collection("flight_ticket")
+    //   .getFullList(`user.id="${userId}`, {
+    //     expand: "origin,destination,airline,customers.costumers",
+    //   });
+    const resultList = await pb.collection("flight_ticket").getList(1, 10, {
+      filter: `user.id="${userId}"`,
       expand: "origin,destination,airline,customers.costumers",
     });
-    setHistory(resultList);
-    console.log(resultList);
+    setHistory(resultList.items);
+    // console.log(resultList.items);
   }
 
   useEffect(() => {
